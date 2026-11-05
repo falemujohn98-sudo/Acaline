@@ -1,0 +1,2709 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="CareerPredictor">
+<meta name="theme-color" content="#0F0E17">
+<meta name="description" content="AI-powered career guidance for Nigerian secondary school students">
+<title>ACALINE</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="config.js"></script>
+<script src="script.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --p:#4F46E5;--pl:#818CF8;--pd:#3730A3;
+  --s:#7C3AED;--a:#EC4899;--a2:#F59E0B;
+  --bg:#0F0E17;--bg2:#1A1828;--bg3:#252338;--bg4:#2E2B47;
+  --sf:#1E1C2E;--sf2:#28263C;
+  --tx:#F8F7FF;--tx2:#B8B5D4;--tx3:#7B78A0;
+  --gr:#10B981;--grb:#0D2D22;
+  --rd:#EF4444;--rdb:#2D1515;
+  --yw:#F59E0B;--ywb:#2D240D;
+  --br:rgba(255,255,255,0.08);--br2:rgba(255,255,255,0.12);
+  --r:16px;--rs:10px;--rx:8px;
+  --grad:linear-gradient(135deg,#4F46E5,#7C3AED,#EC4899);
+  --sh:0 8px 32px rgba(0,0,0,0.4);
+  --glow:0 0 20px rgba(79,70,229,0.3);
+}
+body{font-family:'DM Sans',sans-serif;background:#111;color:var(--tx);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;}
+.outer{display:flex;gap:40px;align-items:flex-start;max-width:960px;margin:0 auto;}
+.side{width:210px;flex-shrink:0;padding-top:32px;}
+.side h3{font-family:'Sora',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.side p{font-size:12px;color:var(--tx3);line-height:1.6;margin-bottom:14px;}
+.slist{list-style:none;}
+.slist li{font-size:12px;color:var(--tx3);padding:5px 8px;border-radius:6px;cursor:pointer;transition:all .2s;border-left:2px solid transparent;}
+.slist li:hover{color:var(--pl);background:rgba(79,70,229,0.06);}
+.slist li.cur{color:var(--pl);font-weight:600;border-left-color:var(--p);background:rgba(79,70,229,0.08);}
+.phone{width:390px;height:844px;background:var(--bg);border-radius:48px;overflow:hidden;position:relative;box-shadow:0 0 0 2px rgba(255,255,255,0.08),0 40px 80px rgba(0,0,0,0.7),var(--glow);display:flex;flex-direction:column;flex-shrink:0;}
+.notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:34px;background:var(--bg);border-radius:0 0 20px 20px;z-index:100;}
+.pscreen{flex:1;overflow-y:auto;overflow-x:hidden;position:relative;scrollbar-width:none;}
+.pscreen::-webkit-scrollbar{display:none;}
+.page{min-height:844px;display:none;flex-direction:column;}
+.page.active{display:flex;}
+/* Buttons */
+.btn{width:100%;padding:15px;border:none;border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all .2s;}
+.btn-p{background:var(--grad);color:#fff;box-shadow:0 4px 20px rgba(79,70,229,0.4);}
+.btn-p:active{transform:scale(.98);}
+.btn-o{background:transparent;color:var(--tx);border:1.5px solid var(--br2);}
+.btn-o:active{background:var(--sf);}
+.btn-sm{padding:10px 18px;font-size:13px;width:auto;}
+.btn-ghost{background:transparent;color:var(--pl);font-size:14px;font-weight:500;border:none;cursor:pointer;padding:6px;}
+/* Inputs */
+.ig{margin-bottom:14px;}
+.lbl{font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:6px;display:block;letter-spacing:.02em;}
+.inp{width:100%;padding:13px 14px;background:var(--sf2);border:1.5px solid var(--br);border-radius:var(--rs);color:var(--tx);font-family:'DM Sans',sans-serif;font-size:14px;outline:none;transition:border .2s;}
+.inp:focus{border-color:var(--p);}
+.inp::placeholder{color:var(--tx3);}
+select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L6 7L11 1' stroke='%237B78A0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;}
+select.inp option{background:var(--sf2);}
+/* Cards */
+.card{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:16px;margin-bottom:12px;}
+.card-g{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--br2);}
+/* Badges */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:600;}
+.b-pu{background:rgba(79,70,229,0.15);color:var(--pl);}
+.b-gr{background:rgba(16,185,129,0.15);color:var(--gr);}
+.b-am{background:rgba(245,158,11,0.15);color:var(--yw);}
+.b-pk{background:rgba(236,72,153,0.15);color:#F472B6;}
+.b-rd{background:rgba(239,68,68,0.15);color:var(--rd);}
+/* Progress */
+.ptrack{height:4px;background:var(--bg3);border-radius:100px;overflow:hidden;}
+.pfill{height:100%;background:var(--grad);border-radius:100px;transition:width .3s;}
+/* Helpers */
+.px{padding-left:22px;padding-right:22px;}
+.gt{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.row{display:flex;align-items:center;}
+.back{width:38px;height:38px;background:var(--sf);border:1px solid var(--br);border-radius:var(--rx);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;font-size:16px;color:var(--tx2);}
+.stepdots{display:flex;align-items:center;gap:5px;margin-left:auto;}
+.sdot{width:7px;height:7px;border-radius:50%;background:var(--bg3);}
+.sdot.done{background:var(--gr);}
+.sdot.active{background:var(--p);width:18px;border-radius:100px;}
+/* Main nav */
+.mnav{background:rgba(15,14,23,0.96);backdrop-filter:blur(20px);border-top:1px solid var(--br);display:flex;padding:6px 0 18px;flex-shrink:0;}
+.mni{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;padding:6px 0;}
+.mni svg{width:21px;height:21px;stroke:var(--tx3);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s;}
+.mni.active svg{stroke:var(--pl);}
+.mni span{font-size:9px;color:var(--tx3);font-weight:500;transition:color .2s;}
+.mni.active span{color:var(--pl);}
+/* Gender */
+.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;}
+.gcard{background:var(--sf2);border:1.5px solid var(--br);border-radius:var(--rs);padding:12px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:6px;transition:all .2s;}
+.gcard:hover{border-color:var(--p);}
+.gcard.sel{border-color:var(--p);background:rgba(79,70,229,0.1);}
+.gcard.sel .glbl{color:var(--pl);}
+.gicon{font-size:22px;}
+.glbl{font-size:12px;font-weight:500;color:var(--tx2);}
+/* Chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.chip{padding:7px 14px;border-radius:100px;font-size:12px;font-weight:500;cursor:pointer;border:1.5px solid var(--br);color:var(--tx2);background:var(--sf2);transition:all .2s;}
+.chip.sel{border-color:var(--p);background:rgba(79,70,229,0.1);color:var(--pl);}
+/* Test options */
+.aopt{background:var(--sf2);border:1.5px solid var(--br);border-radius:var(--rs);padding:14px;margin-bottom:9px;cursor:pointer;font-size:14px;color:var(--tx2);transition:all .2s;display:flex;align-items:center;gap:10px;}
+.aopt:hover{border-color:var(--br2);}
+.aopt.sel{border-color:var(--p);background:rgba(79,70,229,0.1);color:var(--tx);}
+.oltr{width:26px;height:26px;border-radius:7px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--tx3);flex-shrink:0;}
+.aopt.sel .oltr{background:var(--p);color:#fff;}
+/* Scale */
+.scaleopts{display:flex;justify-content:space-between;gap:6px;margin-bottom:20px;}
+.sopt{flex:1;padding:12px 4px;border-radius:var(--rs);background:var(--sf2);border:1.5px solid var(--br);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;transition:all .2s;}
+.sopt.sel{border-color:var(--p);background:rgba(79,70,229,0.1);}
+.snum{font-size:16px;font-weight:700;color:var(--tx2);}
+.sopt.sel .snum{color:var(--pl);}
+/* Upload zone */
+.uzone{border:2px dashed var(--br2);border-radius:var(--r);padding:28px 20px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:all .2s;margin-bottom:12px;text-align:center;}
+.uzone:hover{border-color:var(--p);background:rgba(79,70,229,0.04);}
+.uzone.uploaded{border-color:var(--gr);border-style:solid;background:rgba(16,185,129,0.04);}
+.uico{width:48px;height:48px;border-radius:14px;display:flex;align-items:center;justify-content:center;}
+/* Career cards */
+.ccard{background:var(--sf);border:1px solid var(--br);border-radius:18px;padding:18px;margin-bottom:14px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.ccard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);}
+.ccard.c2::before{background:linear-gradient(90deg,#7C3AED,#EC4899);}
+.ccard.c3::before{background:linear-gradient(90deg,#F59E0B,#EC4899);}
+.ccard:active{transform:scale(.99);}
+/* Tabs */
+.tabnav{display:flex;gap:3px;background:var(--sf);padding:4px;border-radius:var(--rs);margin-bottom:16px;}
+.tabbtn{flex:1;padding:9px 4px;font-size:11px;font-weight:600;border-radius:7px;cursor:pointer;border:none;background:transparent;color:var(--tx3);font-family:'DM Sans',sans-serif;transition:all .2s;}
+.tabbtn.active{background:var(--p);color:#fff;}
+.tabcont{display:none;}
+.tabcont.active{display:block;}
+/* Assess cards */
+.ascard{background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:14px;display:flex;align-items:center;gap:12px;cursor:pointer;margin-bottom:10px;transition:all .2s;}
+.ascard:active{transform:scale(.98);}
+.asnum{width:42px;height:42px;border-radius:11px;background:var(--sf2);border:1px solid var(--br);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.ascard.done .asnum{background:var(--grb);border-color:rgba(16,185,129,.3);}
+.ascard.nxt .asnum{background:rgba(79,70,229,.15);border-color:rgba(79,70,229,.3);}
+.ascard.locked{opacity:.5;cursor:not-allowed;}
+/* Upload level cards */
+.ulcard{background:var(--sf2);border:1.5px solid var(--br);border-radius:var(--rs);padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.ulcard.done{border-color:rgba(16,185,129,.3);background:var(--grb);}
+.ulcard.active-now{border-color:rgba(79,70,229,.3);background:rgba(79,70,229,.05);}
+.ulcard.locked{opacity:.45;}
+/* Orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);opacity:.35;}
+.o1{width:280px;height:280px;background:#4F46E5;top:-80px;left:-60px;}
+.o2{width:220px;height:220px;background:#EC4899;bottom:-50px;right:-40px;}
+.o3{width:160px;height:160px;background:#7C3AED;top:50%;left:50%;transform:translate(-50%,-50%);}
+/* Pro cards */
+.procard{background:var(--sf2);border:1px solid var(--br);border-radius:var(--rs);padding:13px;margin-bottom:9px;display:flex;gap:11px;align-items:center;}
+.proav{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:#fff;flex-shrink:0;}
+/* Uni cards */
+.unicard{background:var(--sf2);border:1px solid var(--br);border-radius:var(--rs);padding:13px;margin-bottom:9px;display:flex;gap:11px;}
+.unilo{width:42px;height:42px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+/* Industry */
+.indcard{background:var(--sf2);border:1px solid var(--br);border-radius:var(--rs);padding:13px;margin-bottom:9px;display:flex;align-items:center;gap:11px;}
+.indico{width:42px;height:42px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+/* Job row */
+.jobrow{display:flex;align-items:center;gap:9px;padding:11px 0;border-bottom:1px solid var(--br);}
+.jdot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+/* History */
+.hitem{display:flex;gap:11px;margin-bottom:14px;}
+.hline{display:flex;flex-direction:column;align-items:center;}
+.hdot{width:11px;height:11px;border-radius:50%;background:var(--p);flex-shrink:0;margin-top:4px;}
+.hbar{width:2px;flex:1;background:var(--br);margin:5px auto 0;}
+/* Toast */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--gr);color:#fff;padding:9px 18px;border-radius:100px;font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap;}
+.toast.show{opacity:1;}
+/* Lock badge */
+.lockbadge{display:flex;align-items:center;gap:6px;background:rgba(239,68,68,0.12);border:1px solid rgba(239,68,68,0.2);border-radius:8px;padding:8px 12px;margin-bottom:10px;}
+/* Floating cards animation */
+@keyframes fa{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+@keyframes fb{0%,100%{transform:translateY(-4px);}50%{transform:translateY(4px);}}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.5;}}
+/* Scroll content */
+.sc{flex:1;overflow-y:auto;padding-bottom:16px;}
+.sc::-webkit-scrollbar{display:none;}
+/* Settings row */
+.setrow{display:flex;align-items:center;gap:11px;padding:13px 0;border-bottom:1px solid var(--br);cursor:pointer;}
+.setico{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;}
+@media(max-width:700px){
+  .outer{flex-direction:column;align-items:center;}
+  .side{display:none;}
+  body{padding:0;}
+  .phone{border-radius:0;width:100vw;height:100svh;}
+}
+</style>
+</head>
+<body>
+<div class="outer">
+<div class="side">
+  <h3>ACALINE<br></h3>
+  <p>AI career guidance for Nigerian senior secondary school students. SS1-SS3 level.</p>
+  <p style="font-size:11px;color:var(--tx3);">Jump to screen:</p>
+  <ul class="slist" id="SL"></ul>
+</div>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="pscreen" id="PS">
+
+  <!-- ═══════════════ SPLASH ═══════════════ -->
+  <div class="page active" id="splash" data-name="Splash">
+    <div style="position:absolute;inset:0;overflow:hidden;">
+      <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+    </div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;text-align:center;">
+      <div style="width:84px;height:84px;background:var(--grad);border-radius:26px;display:flex;align-items:center;justify-content:center;margin-bottom:28px;box-shadow:0 8px 32px rgba(79,70,229,.5);">
+        <svg width="42" height="42" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" stroke="white" stroke-width="2" opacity=".3"/><path d="M14 22c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="22" cy="22" r="3" fill="white"/><path d="M22 8V6M22 38v-2M36 22h2M6 22H4" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/></svg>
+      </div>
+      <h1 style="font-family:'Sora',sans-serif;font-size:30px;font-weight:800;line-height:1.2;margin-bottom:10px;"><span class="gt">ACALINE</span><br></h1>
+      <p style="font-size:14px;color:var(--tx2);line-height:1.7;margin-bottom:48px;">AI-powered career guidance tailored for Nigerian senior secondary school students — SS1 to SS3.</p>
+      <div style="width:100%;">
+        <button class="btn btn-p" style="margin-bottom:10px;" onclick="G('onboard')">Get Started</button>
+        <button class="btn btn-o" onclick="G('login')">I already have an account</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ONBOARDING ═══════════════ -->
+  <div class="page" id="onboard" data-name="Onboarding">
+    <div style="height:320px;background:linear-gradient(180deg,var(--bg2),var(--bg));display:flex;align-items:center;justify-content:center;position:relative;">
+      <div style="position:relative;width:280px;height:260px;">
+        <div style="position:absolute;top:16px;left:0;width:155px;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:11px 13px;animation:fa 3s ease-in-out infinite;box-shadow:var(--sh);">
+          <div style="font-size:10px;color:var(--tx3);margin-bottom:5px;">Best Match</div>
+          <div style="font-size:13px;font-weight:600;">Software Engineer</div>
+          <div style="margin-top:7px;height:3px;background:var(--grad);border-radius:100px;"></div>
+        </div>
+        <div style="position:absolute;top:75px;right:0;width:145px;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:11px 13px;animation:fb 3.5s ease-in-out infinite;box-shadow:var(--sh);">
+          <div style="font-size:10px;color:var(--tx3);margin-bottom:4px;">🎯 Detected Skills</div>
+          <div style="font-size:12px;font-weight:500;">Analytical<br>Problem Solving</div>
+        </div>
+        <div style="position:absolute;bottom:10px;left:16px;width:165px;background:var(--sf);border:1px solid var(--br2);border-radius:14px;padding:11px 13px;animation:fa 4s ease-in-out infinite;box-shadow:var(--sh);">
+          <div style="font-size:10px;color:var(--tx3);margin-bottom:4px;">🏛️ Top University</div>
+          <div style="font-size:13px;font-weight:600;">Federal University of Technology Akure</div>
+          <div style="font-size:11px;color:var(--gr);">Computer Engineering </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;padding:20px 24px 32px;display:flex;flex-direction:column;">
+      <div style="display:flex;gap:5px;margin-bottom:22px;">
+        <div style="flex:2;height:4px;background:var(--p);border-radius:100px;"></div>
+        <div style="flex:1;height:4px;background:var(--bg3);border-radius:100px;"></div>
+        <div style="flex:1;height:4px;background:var(--bg3);border-radius:100px;"></div>
+      </div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:700;margin-bottom:10px;line-height:1.3;">Discover Your <span class="gt">Ideal Career</span></h2>
+      <p style="font-size:14px;color:var(--tx2);line-height:1.7;margin-bottom:28px;">Complete assessments designed by experts. Our AI analyses your strengths, interests and academic records to guide you to the perfect path.</p>
+      <div style="margin-top:auto;">
+        <button class="btn btn-p" style="margin-bottom:10px;" onclick="G('signup')">Continue</button>
+        <button class="btn-ghost" style="width:100%;text-align:center;display:block;" onclick="G('login')">Already have an account? Sign in</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ LOGIN ═══════════════ -->
+  <div class="page" id="login" data-name="Login">
+    <div style="padding:54px 22px 22px;background:linear-gradient(180deg,var(--bg2),var(--bg));">
+      <div class="row" style="margin-bottom:22px;"><div class="back" onclick="navBack()">←</div></div>
+      <div style="width:50px;height:50px;background:rgba(79,70,229,.12);border-radius:14px;display:flex;align-items:center;justify-content:center;margin-bottom:16px;border:1px solid rgba(79,70,229,.2);">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
+      </div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:700;margin-bottom:5px;">Welcome back</h2>
+      <p style="color:var(--tx2);font-size:14px;">Sign in to continue your journey</p>
+    </div>
+    <div class="sc px" style="padding-top:20px;">
+      <div style="width:100%;padding:13px;background:var(--sf2);border:1.5px solid var(--br);border-radius:var(--rs);display:flex;align-items:center;justify-content:center;gap:9px;cursor:pointer;margin-bottom:14px;font-size:14px;font-weight:500;">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+        Continue with Google
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;margin:12px 0;"><div style="flex:1;height:1px;background:var(--br);"></div><span style="font-size:11px;color:var(--tx3);">or with email</span><div style="flex:1;height:1px;background:var(--br);"></div></div>
+      <div class="ig"><label class="lbl">Email address</label><input type="email" class="inp" placeholder="you@example.com"></div>
+      <div class="ig"><label class="lbl">Password</label><input type="password" class="inp" placeholder="Enter your password"></div>
+      <div style="text-align:right;margin-bottom:20px;"><button class="btn-ghost" style="font-size:12px;">Forgot password?</button></div>
+      <button class="btn btn-p" style="margin-bottom:10px;" onclick="handleLogin()">Sign In</button>
+      <p style="text-align:center;font-size:13px;color:var(--tx3);">No account? <button class="btn-ghost" style="font-size:13px;" onclick="G('signup')">Sign up</button></p>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ SIGN UP ═══════════════ -->
+  <div class="page" id="signup" data-name="Sign Up">
+    <div style="padding:54px 22px 18px;background:linear-gradient(180deg,var(--bg2),var(--bg));">
+      <div class="row" style="margin-bottom:18px;">
+        <div class="back" onclick="navBack()">←</div>
+        <div style="flex:1;"></div>
+        <div class="stepdots"><div class="sdot active"></div><div class="sdot"></div><div class="sdot"></div></div>
+      </div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:23px;font-weight:700;margin-bottom:4px;">Create Account</h2>
+      <p style="color:var(--tx2);font-size:13px;">Step 1 of 3 — Account Details</p>
+    </div>
+    <div class="sc px" style="padding-top:18px;">
+      <div class="ig"><label class="lbl">Full Name</label><input type="text" class="inp" placeholder="Enter your full name"></div>
+      <div class="ig"><label class="lbl">Email Address</label><input type="email" class="inp" placeholder="you@example.com"></div>
+      <div class="ig"><label class="lbl">Phone Number</label><input type="tel" class="inp" placeholder="+234 801 234 5678"></div>
+      <div class="ig"><label class="lbl">Date of Birth</label><input type="date" class="inp"></div>
+      <div class="ig">
+        <label class="lbl">Gender</label>
+        <div class="ggrid">
+          <div class="gcard" onclick="selG(this)"><div class="gicon">♂️</div><div class="glbl">Male</div></div>
+          <div class="gcard" onclick="selG(this)"><div class="gicon">♀️</div><div class="glbl">Female</div></div>
+          <div class="gcard" onclick="selG(this)"><div class="gicon">⚧</div><div class="glbl">Other</div></div>
+        </div>
+      </div>
+      <div class="ig"><label class="lbl">Password</label><input type="password" class="inp" placeholder="Create a strong password"></div>
+      <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:20px;">
+        <input type="checkbox" style="margin-top:3px;accent-color:var(--p);">
+        <span style="font-size:12px;color:var(--tx3);line-height:1.5;">I agree to the <span style="color:var(--pl);">Terms of Service</span> and <span style="color:var(--pl);">Privacy Policy</span></span>
+      </div>
+      <button class="btn btn-p" style="margin-bottom:10px;" onclick="handleSignup()">Continue →</button>
+      <p style="text-align:center;font-size:13px;color:var(--tx3);padding-bottom:20px;">Already have an account? <button class="btn-ghost" style="font-size:13px;" onclick="G('login')">Sign in</button></p>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PROFILE BASIC ═══════════════ -->
+  <div class="page" id="profile-basic" data-name="Profile: School Info">
+    <div style="padding:54px 22px 16px;">
+      <div class="row" style="margin-bottom:16px;">
+        <div class="back" onclick="navBack()">←</div>
+        <div style="flex:1;padding-left:10px;"><div style="font-size:11px;color:var(--tx3);">Step 2 of 3</div><div style="font-size:15px;font-weight:600;">School Profile</div></div>
+        <div class="stepdots"><div class="sdot done"></div><div class="sdot active"></div><div class="sdot"></div></div>
+      </div>
+    </div>
+    <div class="sc px">
+      <div style="margin-bottom:20px;">
+        <div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:4px;">School Details</div>
+        <div style="font-size:13px;color:var(--tx2);">Tell us about your school and current level</div>
+      </div>
+      <div class="ig"><label class="lbl">School Name</label><input type="text" class="inp" placeholder="e.g. King's College Lagos"></div>
+      <div class="ig">
+        <label class="lbl">School Type</label>
+        <select class="inp">
+          <option value="">Select school type</option>
+          <option>Government School</option>
+          <option>Private School</option>
+          <option>Mission / Faith School</option>
+          <option>N/A — Not yet classified</option>
+        </select>
+      </div>
+      <div class="ig">
+        <label class="lbl">State</label>
+        <select class="inp">
+          <option value="">Select state</option>
+          <option>Lagos</option><option>Abuja (FCT)</option><option>Kano</option>
+          <option>Rivers</option><option>Ogun</option><option>Oyo</option>
+          <option>Anambra</option><option>Enugu</option><option>Delta</option>
+          <option>Kaduna</option><option>Plateau</option><option>Imo</option>
+          <option>Edo</option><option>Borno</option><option>Sokoto</option>
+        </select>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div class="ig">
+          <label class="lbl">Class Level</label>
+          <select class="inp" id="classSelect" onchange="onClassChange(this.value)">
+            <option value="">Select</option>
+            <option>SSS 1</option><option>SSS 2</option><option>SSS 3</option>
+          </select>
+        </div>
+        <div class="ig">
+          <label class="lbl">Department</label>
+          <select class="inp" id="deptSelect">
+            <option value="">Select</option>
+            <option>Science</option>
+            <option>Arts</option>
+            <option>Commercial</option>
+          </select>
+        </div>
+      </div>
+      <!-- N/A note for department -->
+      <div id="naNote" style="display:none;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.2);border-radius:var(--rs);padding:10px 13px;margin-bottom:14px;font-size:12px;color:var(--yw);line-height:1.5;">
+        ⚠️ No department selected. You can still complete registration — department options may be assigned by your school later.
+      </div>
+      <div class="ig">
+        <label class="lbl">Preferred Language</label>
+        <select class="inp"><option>English</option><option>Yoruba</option><option>Igbo</option><option>Hausa</option></select>
+      </div>
+      <button class="btn btn-p" onclick="G('profile-interests')">Continue →</button>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PROFILE UPLOAD (SMART) ═══════════════ -->
+  <div class="page" id="profile-upload" data-name="Profile: Upload Results">
+    <div style="padding:54px 22px 16px;">
+      <div class="row" style="margin-bottom:16px;">
+        <div class="back" onclick="navBack()">←</div>
+        <div style="flex:1;padding-left:10px;"><div style="font-size:11px;color:var(--tx3);">Step 3 of 3</div><div style="font-size:15px;font-weight:600;">Upload Results</div></div>
+        <div class="stepdots"><div class="sdot done"></div><div class="sdot done"></div><div class="sdot active"></div></div>
+      </div>
+    </div>
+    <div class="sc px">
+      <div style="margin-bottom:18px;">
+        <div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:5px;">Enter Your Results Manually</div>
+        <div style="font-size:13px;color:var(--tx2);line-height:1.6;">Add your grades for the required subjects by hand. This helps us build your academic profile quickly without file uploads.</div>
+      </div>
+      <!-- Dynamic manual grade entry rendered by JS -->
+      <div id="uploadSlots"></div>
+      <div class="card-g card" style="margin-bottom:18px;">
+        <div style="font-size:12px;font-weight:600;color:var(--pl);margin-bottom:5px;">🔒 Your data is secure</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.6;">Results are encrypted and used only for career analysis. We never share them with third parties.</div>
+      </div>
+      <div style="font-size:13px;color:var(--tx2);line-height:1.6;margin-bottom:16px;">Use the Save Manual Results button above to save your grades. After saving, continue to the assessment hub from the upload section.</div>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ VIEW UPLOADED RESULTS (NEW) ═══════════════ -->
+  <div class="page" id="view-results" data-name="View: Manual Grades">
+    <div style="padding:54px 22px 16px;">
+      <div class="row" style="margin-bottom:16px;">
+        <div class="back" onclick="navBack()">←</div>
+        <div style="flex:1;padding-left:10px;"><div style="font-size:11px;color:var(--tx3);">Results</div><div style="font-size:15px;font-weight:600;">Manual Grade Overview</div></div>
+      </div>
+    </div>
+    <div class="sc px">
+      <div style="margin-bottom:12px;display:flex;gap:10px;align-items:center;justify-content:space-between;">
+        <div style="flex:1;">
+          <div style="font-size:13px;color:var(--tx2);">Review the grades you entered manually. Use this page to confirm or edit before continuing to assessments.</div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-sm" onclick="G('profile-upload')">Upload / Edit Grades</button>
+        </div>
+      </div>
+
+      <div id="viewResultsContent"></div>
+
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PROFILE INTERESTS ═══════════════ -->
+  <div class="page" id="profile-interests" data-name="Profile: Interests">
+    <div style="padding:54px 22px 16px;">
+      <div class="row" style="margin-bottom:16px;">
+        <div class="back" onclick="navBack()">←</div>
+        <div style="flex:1;padding-left:10px;"><div style="font-size:11px;color:var(--tx3);">Optional</div><div style="font-size:15px;font-weight:600;">Your Interests</div></div>
+      </div>
+    </div>
+    <div class="sc px">
+      <div style="margin-bottom:18px;">
+        <div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:4px;">What Interests You?</div>
+        <div style="font-size:13px;color:var(--tx2);">Select all that apply. This personalises your career matches.</div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:var(--tx3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">Subject Interests</div>
+      <div class="chips">
+        <div class="chip sel" onclick="tChip(this)">Mathematics</div>
+        <div class="chip" onclick="tChip(this)">Physics</div>
+        <div class="chip sel" onclick="tChip(this)">Computer Science</div>
+        <div class="chip" onclick="tChip(this)">Biology</div>
+        <div class="chip" onclick="tChip(this)">Chemistry</div>
+        <div class="chip" onclick="tChip(this)">Literature</div>
+        <div class="chip" onclick="tChip(this)">Economics</div>
+        <div class="chip" onclick="tChip(this)">Fine Art</div>
+        <div class="chip" onclick="tChip(this)">Music</div>
+        <div class="chip" onclick="tChip(this)">Government</div>
+      </div>
+      <div style="font-size:12px;font-weight:600;color:var(--tx3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.05em;">Career Areas</div>
+      <div class="chips">
+        <div class="chip sel" onclick="tChip(this)">Technology</div>
+        <div class="chip" onclick="tChip(this)">Medicine</div>
+        <div class="chip" onclick="tChip(this)">Engineering</div>
+        <div class="chip" onclick="tChip(this)">Law</div>
+        <div class="chip" onclick="tChip(this)">Business</div>
+        <div class="chip" onclick="tChip(this)">Arts & Design</div>
+        <div class="chip" onclick="tChip(this)">Education</div>
+        <div class="chip" onclick="tChip(this)">Agriculture</div>
+        <div class="chip sel" onclick="tChip(this)">Finance</div>
+        <div class="chip" onclick="tChip(this)">Media</div>
+        <div class="chip" onclick="tChip(this)">Architecture</div>
+      </div>
+      <div class="ig"><label class="lbl">Preferred Career Fields (Optional)</label><input type="text" class="inp" placeholder="e.g. Software Development, Medicine…"></div>
+      <button class="btn btn-p" onclick="G('profile-upload')">Finish Setup →</button>
+      <div style="height:20px;"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ ASSESSMENT HUB ═══════════════ -->
+  <div class="page" id="assessment-hub" data-name="Assessment Hub">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 20px;background:linear-gradient(180deg,var(--bg2),var(--bg) 60%);">
+        <div class="row" style="margin-bottom:18px;">
+          <div>
+            <div style="font-size:12px;color:var(--tx3);">Hello, <span id="assessHubUserName">Adaeze</span> 👋</div>
+            <div style="font-family:'Sora',sans-serif;font-size:20px;font-weight:700;">Your Assessments</div>
+          </div>
+          <div id="assessHubAvatar" style="margin-left:auto;width:40px;height:40px;border-radius:12px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;">A</div>
+        </div>
+        <div class="card card-g" style="padding:14px 16px;">
+          <div class="row" style="margin-bottom:8px;">
+            <div style="font-size:13px;font-weight:600;">Overall Progress</div>
+            <div style="margin-left:auto;font-size:12px;color:var(--pl);font-weight:600;" id="progLabel">2 / 4 Done</div>
+          </div>
+          <div class="ptrack"><div class="pfill" id="progBar" style="width:50%"></div></div>
+          <div style="font-size:11px;color:var(--tx3);margin-top:7px;">Complete all 4 tests to unlock your career recommendations</div>
+        </div>
+        <!-- Test lock status for class -->
+        <div id="testLockInfo" style="margin-top:10px;"></div>
+      </div>
+      <div class="sc px" style="padding-top:14px;">
+        <div id="assessCards"></div>
+        <div id="assessmentAction"></div>
+        <div style="padding:10px 0;border-top:1px solid var(--br);">
+          <div style="font-size:12px;color:var(--tx3);text-align:center;">All 4 tests must be completed for AI analysis</div>
+        </div>
+      </div>
+      <div class="mnav">
+        <div class="mni active" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni" onclick="G('career-results')"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni" onclick="G('saved')"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni" onclick="G('my-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ APTITUDE TEST ═══════════════ -->
+  <div class="page" id="aptitude-test" data-name="Aptitude Test">
+    <div style="padding:52px 22px 18px;">
+      <div class="row" style="margin-bottom:18px;"><div class="back" onclick="navBack()">←</div><div style="flex:1;padding-left:10px;font-size:14px;font-weight:600;">Aptitude Test</div></div>
+      <div><div class="row" style="margin-bottom:5px;"><span style="font-size:11px;color:var(--tx3);">Question 3 of 20</span><span style="margin-left:auto;font-size:11px;color:var(--tx3);">15%</span></div><div class="ptrack"><div class="pfill" style="width:15%"></div></div></div>
+    </div>
+    <div class="sc px">
+      <p style="font-family:'Sora',sans-serif;font-size:17px;font-weight:600;line-height:1.4;margin-bottom:22px;">If a train travels 240 km in 3 hours, how long will it take to travel 400 km at the same speed?</p>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">A</div>4 hours 30 minutes</div>
+      <div class="aopt sel" onclick="selOpt(this)"><div class="oltr">B</div>5 hours</div>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">C</div>5 hours 30 minutes</div>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">D</div>6 hours</div>
+      <div style="margin-top:22px;display:flex;gap:10px;">
+        <button class="btn btn-o btn-sm" onclick="prevQuestion()">← Previous</button>
+        <button class="btn btn-p btn-sm" style="flex:1;" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ COGNITIVE TEST ═══════════════ -->
+  <div class="page" id="cognitive-test" data-name="Cognitive Test">
+    <div style="padding:52px 22px 18px;">
+      <div class="row" style="margin-bottom:18px;"><div class="back" onclick="navBack()">←</div><div style="flex:1;padding-left:10px;font-size:14px;font-weight:600;">Cognitive Test</div></div>
+      <div><div class="row" style="margin-bottom:5px;"><span style="font-size:11px;color:var(--tx3);">Question 5 of 15</span><span style="margin-left:auto;font-size:11px;color:var(--tx3);">33%</span></div><div class="ptrack"><div class="pfill" style="width:33%"></div></div></div>
+    </div>
+    <div class="sc px">
+      <p style="font-family:'Sora',sans-serif;font-size:17px;font-weight:600;line-height:1.4;margin-bottom:22px;">Look at the pattern: 2, 6, 18, 54, ___. What comes next?</p>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">A</div>108</div>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">B</div>144</div>
+      <div class="aopt sel" onclick="selOpt(this)"><div class="oltr">C</div>162</div>
+      <div class="aopt" onclick="selOpt(this)"><div class="oltr">D</div>216</div>
+      <div style="margin-top:16px;padding:13px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.18);border-radius:var(--rs);">
+        <div style="font-size:12px;color:var(--yw);font-weight:600;margin-bottom:3px;">💡 Hint</div>
+        <div style="font-size:12px;color:var(--tx2);">Look at the relationship between each consecutive number.</div>
+      </div>
+      <div style="margin-top:20px;display:flex;gap:10px;">
+        <button class="btn btn-o btn-sm" onclick="prevQuestion()">← Previous</button>
+        <button class="btn btn-p btn-sm" style="flex:1;" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PERSONALITY TEST ═══════════════ -->
+  <div class="page" id="personality-test" data-name="Personality Test">
+    <div style="padding:52px 22px 18px;">
+      <div class="row" style="margin-bottom:18px;"><div class="back" onclick="navBack()">←</div><div style="flex:1;padding-left:10px;font-size:14px;font-weight:600;">Personality Test</div></div>
+      <div><div class="row" style="margin-bottom:5px;"><span style="font-size:11px;color:var(--tx3);">Question 8 of 30</span><span style="margin-left:auto;font-size:11px;color:var(--tx3);">27%</span></div><div class="ptrack"><div class="pfill" style="width:27%"></div></div></div>
+    </div>
+    <div class="sc px">
+      <p style="font-family:'Sora',sans-serif;font-size:17px;font-weight:600;line-height:1.4;margin-bottom:20px;">When working on a group project, you usually prefer to:</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;">
+        <div class="aopt sel" style="flex-direction:column;text-align:center;padding:18px 10px;" onclick="selCard(this)"><div style="font-size:22px;margin-bottom:7px;">🎯</div><div style="font-size:12px;">Take the lead and organise the team</div></div>
+        <div class="aopt" style="flex-direction:column;text-align:center;padding:18px 10px;" onclick="selCard(this)"><div style="font-size:22px;margin-bottom:7px;">🤝</div><div style="font-size:12px;">Support others and follow the plan</div></div>
+        <div class="aopt" style="flex-direction:column;text-align:center;padding:18px 10px;" onclick="selCard(this)"><div style="font-size:22px;margin-bottom:7px;">💡</div><div style="font-size:12px;">Generate creative ideas</div></div>
+        <div class="aopt" style="flex-direction:column;text-align:center;padding:18px 10px;" onclick="selCard(this)"><div style="font-size:22px;margin-bottom:7px;">📊</div><div style="font-size:12px;">Analyse data and check quality</div></div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-o btn-sm" onclick="prevQuestion()">← Previous</button>
+        <button class="btn btn-p btn-sm" style="flex:1;" onclick="nextQuestion()">Next →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ PSYCHOMETRIC TEST ═══════════════ -->
+  <div class="page" id="psychometric-test" data-name="Psychometric Test">
+    <div style="padding:52px 22px 18px;">
+      <div class="row" style="margin-bottom:18px;"><div class="back" onclick="navBack()">←</div><div style="flex:1;padding-left:10px;font-size:14px;font-weight:600;">Psychometric Test</div></div>
+      <div><div class="row" style="margin-bottom:5px;"><span style="font-size:11px;color:var(--tx3);">Question 12 of 25</span><span style="margin-left:auto;font-size:11px;color:var(--tx3);">48%</span></div><div class="ptrack"><div class="pfill" style="width:48%"></div></div></div>
+    </div>
+    <div class="sc px">
+      <p style="font-family:'Sora',sans-serif;font-size:17px;font-weight:600;line-height:1.4;margin-bottom:16px;">How interested are you in building and programming software applications?</p>
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--tx3);margin-bottom:9px;"><span>Not at all</span><span>Extremely interested</span></div>
+      <div class="scaleopts">
+        <div class="sopt" onclick="selScale(this)"><span class="snum">1</span></div>
+        <div class="sopt" onclick="selScale(this)"><span class="snum">2</span></div>
+        <div class="sopt" onclick="selScale(this)"><span class="snum">3</span></div>
+        <div class="sopt" onclick="selScale(this)"><span class="snum">4</span></div>
+        <div class="sopt sel" onclick="selScale(this)"><span class="snum">5</span></div>
+      </div>
+      <div style="background:var(--sf2);border-radius:var(--rs);padding:12px;margin-bottom:18px;">
+        <div style="font-size:12px;font-weight:600;margin-bottom:7px;">Other Questions in This Section:</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:2;">• Working with data and analytics<br>• Designing user interfaces<br>• Teaching or mentoring others<br>• Creative writing or storytelling</div>
+      </div>
+      <div style="display:flex;gap:10px;">
+        <button class="btn btn-o btn-sm" onclick="prevQuestion()">← Previous</button>
+        <button class="btn btn-p btn-sm" style="flex:1;" onclick="nextQuestion()">Submit All →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ AI PROCESSING ═══════════════ -->
+  <div class="page" id="processing" data-name="AI Processing">
+    <div style="position:absolute;inset:0;overflow:hidden;"><div class="orb o1" style="opacity:.12;"></div><div class="orb o3" style="opacity:.08;"></div></div>
+    <div style="position:relative;z-index:1;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 26px;text-align:center;">
+      <div style="width:150px;height:150px;position:relative;margin-bottom:28px;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:3px solid var(--br);animation:spin 3s linear infinite;"></div>
+        <div style="position:absolute;inset:11px;border-radius:50%;border:3px solid transparent;border-top-color:var(--p);border-right-color:var(--s);animation:spin 1.5s linear infinite reverse;"></div>
+        <div style="position:absolute;inset:27px;background:linear-gradient(135deg,rgba(79,70,229,.18),rgba(124,58,237,.18));border-radius:50%;display:flex;align-items:center;justify-content:center;">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#818CF8" stroke-width="1.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>
+        </div>
+      </div>
+      <h2 style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:7px;">Analysing Your Data</h2>
+      <p style="font-size:13px;color:var(--tx2);margin-bottom:28px;line-height:1.6;">Our AI is processing your assessments and academic profile to find the best Nigerian career paths for you.</p>
+      <div style="width:100%;max-width:300px;margin:0 auto 32px;">
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--grb);border-radius:var(--rs);margin-bottom:7px;"><div style="width:22px;height:22px;border-radius:50%;background:var(--gr);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div><span style="font-size:13px;color:var(--gr);">Academic profile analysed</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--grb);border-radius:var(--rs);margin-bottom:7px;"><div style="width:22px;height:22px;border-radius:50%;background:var(--gr);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;">✓</div><span style="font-size:13px;color:var(--gr);">Aptitude & cognitive scores processed</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;background:rgba(79,70,229,.1);border-radius:var(--rs);margin-bottom:7px;"><div style="width:22px;height:22px;border-radius:50%;background:var(--p);display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;animation:pulse 1s infinite;">⟳</div><span style="font-size:13px;color:var(--pl);">Personality traits mapped…</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:var(--rs);margin-bottom:7px;"><div style="width:22px;height:22px;border-radius:50%;background:var(--sf2);border:1.5px solid var(--br);flex-shrink:0;"></div><span style="font-size:13px;color:var(--tx3);">Generating career recommendations</span></div>
+        <div style="display:flex;align-items:center;gap:10px;padding:10px 13px;border-radius:var(--rs);"><div style="width:22px;height:22px;border-radius:50%;background:var(--sf2);border:1.5px solid var(--br);flex-shrink:0;"></div><span style="font-size:13px;color:var(--tx3);">Matching Nigerian universities</span></div>
+      </div>
+      <button class="btn btn-p" style="max-width:280px;" onclick="G('career-results')">View Results →</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CAREER RESULTS ═══════════════ -->
+  <div class="page" id="career-results" data-name="Career Results">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 20px;background:linear-gradient(180deg,var(--bg2),var(--bg));">
+        <div class="row" style="margin-bottom:18px;">
+          <div class="back" onclick="navBack()">←</div>
+          <div style="flex:1;padding-left:10px;"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;">Your Results</div><div style="font-size:12px;color:var(--tx2);">Based on your full assessment</div></div>
+          <button onclick="saveAllRecommendations()" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:var(--rx);padding:7px 13px;font-size:12px;font-weight:600;color:var(--pl);cursor:pointer;">Save All</button>
+        </div>
+        <div class="card card-g">
+          <div style="font-size:11px;color:var(--tx3);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">Strengths Detected</div>
+          <div style="display:flex;flex-wrap:wrap;gap:6px;">
+            <span class="badge b-pu">Analytical Thinking</span>
+            <span class="badge b-gr">Problem Solving</span>
+            <span class="badge b-pk">Creative Vision</span>
+            <span class="badge b-am">Leadership</span>
+          </div>
+        </div>
+      </div>
+      <div class="sc px" style="padding-top:14px;">
+        <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Recommended Career Paths</div>
+        <div class="ccard" onclick="G('career-detail')">
+          <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥇 Primary Recommendation</div>
+          <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">Software Engineering</div>
+          <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">Recommended because your Physics and Maths results show strong logical ability. Your aptitude test reveals exceptional problem-solving skills, and your interest inventory confirms a clear passion for technology and systems.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;"><span class="badge b-pu">Strong Maths</span><span class="badge b-gr">High Aptitude</span><span class="badge b-pk">Tech Interest</span></div>
+        </div>
+        <div class="ccard c2" onclick="G('career-detail')">
+          <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥈 Alternative Path</div>
+          <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">Data Science & Analytics</div>
+          <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">Your strong performance in Mathematics and Further Maths combined with your pattern-recognition aptitude makes Data Science a highly compatible path for Nigeria's growing data economy.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;"><span class="badge b-pu">Further Maths</span><span class="badge b-am">Pattern Recognition</span></div>
+        </div>
+        <div class="ccard c3" onclick="G('career-detail')">
+          <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥉 Broader Option</div>
+          <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">Electrical Engineering</div>
+          <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">Your physics aptitude and spatial reasoning from the cognitive test suggest strong potential for electrical engineering — one of Nigeria's most in-demand fields.</div>
+          <div style="display:flex;flex-wrap:wrap;gap:5px;"><span class="badge b-gr">Physics Strength</span><span class="badge b-am">Spatial Reasoning</span></div>
+        </div>
+        <div class="card card-g" style="margin-top: 14px; padding: 16px;">
+          <div style="font-size:11px;color:var(--pl);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">💡 Detailed Mentor Advice</div>
+          <div id="aiSummaryReport" style="font-size:13px;color:var(--tx2);line-height:1.65; white-space: pre-wrap; font-family: 'DM Sans', sans-serif;">
+            Please complete your assessment to view details.
+          </div>
+        </div>
+        <div style="height:14px;"></div>
+      </div>
+      <div class="mnav">
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni active"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni" onclick="G('saved')"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni" onclick="G('my-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════ CAREER DETAIL ═══════════════ -->
+  <div class="page" id="career-detail" data-name="Career Detail">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 18px;background:linear-gradient(180deg,var(--bg2),var(--bg));">
+        <div class="row" style="margin-bottom:16px;">
+          <div class="back" onclick="navBack()">←</div>
+          <div style="flex:1;"></div>
+          <button id="detailSaveBtn" onclick="toggleSaveCareer(currentCareerName)" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:var(--rx);padding:7px 13px;font-size:12px;font-weight:600;color:var(--pl);cursor:pointer;">🔖 Save</button>
+        </div>
+        <div style="display:inline-flex;background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);padding:5px 12px;border-radius:100px;margin-bottom:10px;"><span style="font-size:11px;font-weight:600;color:var(--pl);">🥇 Primary Recommendation</span></div>
+        <h2 style="font-family:'Sora',sans-serif;font-size:24px;font-weight:800;margin-bottom:7px;">Software<br>Engineering</h2>
+        <p style="font-size:13px;color:var(--tx2);line-height:1.6;">Design, build and maintain software systems — from mobile apps to enterprise infrastructure.</p>
+      </div>
+      <div class="px" style="padding-top:14px;padding-bottom:6px;">
+        <div class="tabnav" id="DT">
+          <button class="tabbtn active" onclick="sTab('courses',this)">Courses</button>
+          <button class="tabbtn" onclick="sTab('universities',this)">Unis</button>
+          <button class="tabbtn" onclick="sTab('jobs',this)">Jobs</button>
+          <button class="tabbtn" onclick="sTab('people',this)">People</button>
+          <button class="tabbtn" onclick="sTab('industries',this)">Industry</button>
+        </div>
+      </div>
+      <div class="sc px" style="padding-top:2px;">
+        <div class="tabcont active" id="tc-courses">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Courses to study in Nigeria</div>
+          <div class="card" style="padding:13px;"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Computer Science</div><div style="font-size:12px;color:var(--tx2);margin-bottom:7px;">4–5 years · Bachelor of Science</div><div style="display:flex;gap:5px;"><span class="badge b-gr">Best Fit</span><span class="badge b-pu">Wide Availability</span></div></div>
+          <div class="card" style="padding:13px;"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Software Engineering</div><div style="font-size:12px;color:var(--tx2);margin-bottom:7px;">4–5 years · B.Eng</div><div style="display:flex;gap:5px;"><span class="badge b-pu">Specialised</span></div></div>
+          <div class="card" style="padding:13px;"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Information Technology</div><div style="font-size:12px;color:var(--tx2);margin-bottom:7px;">4 years · B.Tech</div><div style="display:flex;gap:5px;"><span class="badge b-am">Industry Focused</span></div></div>
+          <div class="card" style="padding:13px;"><div style="font-size:14px;font-weight:600;margin-bottom:3px;">Computer Engineering</div><div style="font-size:12px;color:var(--tx2);margin-bottom:7px;">5 years · B.Eng</div><div style="display:flex;gap:5px;"><span class="badge b-pk">Hardware + Software</span></div></div>
+        </div>
+        <div class="tabcont" id="tc-universities">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Top Nigerian universities for this field</div>
+          <div class="unicard"><div class="unilo">UI</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">University of Ibadan</div><div style="font-size:11px;color:var(--tx3);">Ibadan, Oyo · Federal</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ Computer Science</div></div><span class="badge b-pu">Top 3</span></div>
+          <div class="unicard"><div class="unilo" style="font-size:10px;">UNILAG</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">University of Lagos</div><div style="font-size:11px;color:var(--tx3);">Akoka, Lagos · Federal</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ CS • Software Eng</div></div></div>
+          <div class="unicard"><div class="unilo" style="background:linear-gradient(135deg,#7C3AED,#EC4899);font-size:11px;">OAU</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Obafemi Awolowo Univ.</div><div style="font-size:11px;color:var(--tx3);">Ile-Ife, Osun · Federal</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ Computer Science</div></div></div>
+          <div class="unicard"><div class="unilo" style="background:linear-gradient(135deg,#F59E0B,#EF4444);font-size:11px;">ABU</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Ahmadu Bello Univ.</div><div style="font-size:11px;color:var(--tx3);">Zaria, Kaduna · Federal</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ CS • IT</div></div></div>
+          <div class="unicard"><div class="unilo" style="background:linear-gradient(135deg,#10B981,#3730A3);font-size:11px;">UNN</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">University of Nigeria</div><div style="font-size:11px;color:var(--tx3);">Nsukka, Enugu · Federal</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ Computer Science</div></div></div>
+          <div class="unicard"><div class="unilo" style="background:linear-gradient(135deg,#EC4899,#F59E0B);font-size:11px;">CU</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Covenant University</div><div style="font-size:11px;color:var(--tx3);">Ota, Ogun · Private</div><div style="font-size:11px;color:var(--gr);margin-top:2px;">✓ Software Eng • IT</div></div><span class="badge b-gr">Top Private</span></div>
+        </div>
+        <div class="tabcont" id="tc-jobs">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Job roles available in Nigeria</div>
+          <div class="jobrow"><div class="jdot" style="background:var(--pl);"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Frontend Developer</div><div style="font-size:11px;color:var(--tx3);">Build user interfaces and web apps</div></div><span class="badge b-gr">High Demand</span></div>
+          <div class="jobrow"><div class="jdot" style="background:var(--s);"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Backend Developer</div><div style="font-size:11px;color:var(--tx3);">APIs, databases and servers</div></div><span class="badge b-gr">High Demand</span></div>
+          <div class="jobrow"><div class="jdot" style="background:var(--a);"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Full Stack Developer</div><div style="font-size:11px;color:var(--tx3);">Frontend + backend combined</div></div><span class="badge b-am">Premium</span></div>
+          <div class="jobrow"><div class="jdot" style="background:var(--gr);"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Mobile App Developer</div><div style="font-size:11px;color:var(--tx3);">iOS and Android development</div></div><span class="badge b-pu">Growing</span></div>
+          <div class="jobrow"><div class="jdot" style="background:var(--yw);"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">DevOps Engineer</div><div style="font-size:11px;color:var(--tx3);">Cloud and automation</div></div><span class="badge b-am">Senior</span></div>
+          <div class="jobrow" style="border:none;"><div class="jdot" style="background:#818CF8;"></div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">ML Engineer</div><div style="font-size:11px;color:var(--tx3);">AI and model development</div></div><span class="badge b-gr">Future</span></div>
+        </div>
+        <div class="tabcont" id="tc-people">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Inspiring Nigerian professionals in this field</div>
+          <div class="procard"><div class="proav" style="background:linear-gradient(135deg,#4F46E5,#7C3AED);">AO</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Adewale Obaseki</div><div style="font-size:11px;color:var(--tx2);">Senior SWE · Google</div><div style="font-size:11px;color:var(--tx3);">OAU Graduate · 8+ yrs</div></div><a href="https://linkedin.com" target="_blank" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:7px;padding:5px 9px;font-size:10px;font-weight:600;color:var(--pl);text-decoration:none;">LinkedIn →</a></div>
+          <div class="procard"><div class="proav" style="background:linear-gradient(135deg,#EC4899,#F59E0B);">CN</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Chidinma Nwosu</div><div style="font-size:11px;color:var(--tx2);">Tech Lead · Flutterwave</div><div style="font-size:11px;color:var(--tx3);">UNILAG Graduate</div></div><a href="https://linkedin.com" target="_blank" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:7px;padding:5px 9px;font-size:10px;font-weight:600;color:var(--pl);text-decoration:none;">LinkedIn →</a></div>
+          <div class="procard"><div class="proav" style="background:linear-gradient(135deg,#10B981,#3730A3);">BI</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Babatunde Ibrahim</div><div style="font-size:11px;color:var(--tx2);">CTO · Paystack</div><div style="font-size:11px;color:var(--tx3);">UI Graduate · Acquired by Stripe</div></div><a href="https://linkedin.com" target="_blank" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:7px;padding:5px 9px;font-size:10px;font-weight:600;color:var(--pl);text-decoration:none;">LinkedIn →</a></div>
+          <div class="procard"><div class="proav" style="background:linear-gradient(135deg,#7C3AED,#EC4899);">TE</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Temi Eniola</div><div style="font-size:11px;color:var(--tx2);">Software Architect · MTN</div><div style="font-size:11px;color:var(--tx3);">Covenant University</div></div><a href="https://linkedin.com" target="_blank" style="background:rgba(79,70,229,.1);border:1px solid rgba(79,70,229,.2);border-radius:7px;padding:5px 9px;font-size:10px;font-weight:600;color:var(--pl);text-decoration:none;">LinkedIn →</a></div>
+        </div>
+        <div class="tabcont" id="tc-industries">
+          <div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Top industries in Nigeria</div>
+          <div class="indcard"><div class="indico" style="background:rgba(79,70,229,.1);">💳</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">FinTech</div><div style="font-size:11px;color:var(--tx3);">Paystack, Flutterwave, Interswitch, Opay</div></div><span class="badge b-gr">Booming</span></div>
+          <div class="indcard"><div class="indico" style="background:rgba(245,158,11,.1);">📱</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Telecom</div><div style="font-size:11px;color:var(--tx3);">MTN, Airtel, Glo, 9Mobile</div></div><span class="badge b-am">Stable</span></div>
+          <div class="indcard"><div class="indico" style="background:rgba(16,185,129,.1);">🛒</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">E-commerce</div><div style="font-size:11px;color:var(--tx3);">Jumia, Konga, Jiji.ng</div></div></div>
+          <div class="indcard"><div class="indico" style="background:rgba(236,72,153,.1);">🌍</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">Global Tech (Remote)</div><div style="font-size:11px;color:var(--tx3);">Google, Microsoft, Amazon, Meta</div></div><span class="badge b-pu">Remote</span></div>
+          <div class="indcard"><div class="indico" style="background:rgba(79,70,229,.1);">🏥</div><div style="flex:1;"><div style="font-size:13px;font-weight:600;">HealthTech</div><div style="font-size:11px;color:var(--tx3);">Helium Health, Reliance HMO</div></div></div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+      <div class="mnav">
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni active"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni" onclick="G('saved')"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni" onclick="G('my-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SAVED -->
+  <div class="page" id="saved" data-name="Saved Careers">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 18px;background:linear-gradient(180deg,var(--bg2),var(--bg));">
+        <div style="font-family:'Sora',sans-serif;font-size:22px;font-weight:700;margin-bottom:3px;">Saved Careers</div>
+        <div style="font-size:13px;color:var(--tx2);">Your bookmarked career paths</div>
+      </div>
+      <div class="sc px" id="savedList" style="padding-top:14px;">
+      </div>
+      <div class="mnav">
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni" onclick="G('career-results')"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni active"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni" onclick="G('my-profile')"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- HISTORY -->
+  <div class="page" id="history" data-name="Assessment History">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 16px;display:flex;align-items:center;gap:10px;">
+        <div class="back" onclick="navBack()">&#8592;</div>
+        <div style="flex:1;"><div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;">Assessment History</div><div style="font-size:12px;color:var(--tx2);">Your career journey over time</div></div>
+      </div>
+      <div class="sc px" id="historyList" style="padding-top:4px;">
+        <div style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:var(--r);padding:13px 14px;margin-bottom:18px;display:flex;align-items:flex-start;gap:9px;">
+          <div style="font-size:18px;">&#128260;</div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;color:var(--yw);margin-bottom:2px;">Class Level Update Detected</div>
+            <div style="font-size:12px;color:var(--tx2);line-height:1.5;">You have moved to SSS 2. Upload your SSS 1 total result to unlock your next assessment attempt.</div>
+            <button class="btn btn-p btn-sm" style="margin-top:9px;" onclick="G('profile-upload')">Upload SSS 1 Result</button>
+          </div>
+        </div>
+        <div class="hitem">
+          <div class="hline"><div class="hdot"></div><div class="hbar"></div></div>
+          <div style="flex:1;padding-bottom:8px;">
+            <div style="font-size:11px;color:var(--tx3);margin-bottom:4px;">November 2024 · SSS 2</div>
+            <div class="card" style="margin-bottom:0;padding:13px;">
+              <div style="font-size:13px;font-weight:600;margin-bottom:5px;">Latest Assessment</div>
+              <div style="font-size:12px;color:var(--tx2);margin-bottom:9px;">All 4 tests completed - Career: Software Engineering</div>
+              <button class="btn btn-p btn-sm" onclick="G('career-results')">View Results</button>
+            </div>
+          </div>
+        </div>
+        <div class="hitem">
+          <div class="hline"><div class="hdot" style="background:var(--tx3);"></div></div>
+          <div style="flex:1;">
+            <div style="font-size:11px;color:var(--tx3);margin-bottom:4px;">March 2024 · JSS 3</div>
+            <div class="card" style="margin-bottom:0;padding:13px;">
+              <div style="font-size:13px;font-weight:600;margin-bottom:5px;">First Assessment</div>
+              <div style="font-size:12px;color:var(--tx2);">2/4 tests - No career match yet</div>
+            </div>
+          </div>
+        </div>
+        <div style="height:16px;"></div>
+      </div>
+      <div class="mnav">
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni" onclick="G('career-results')"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni" onclick="G('saved')"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni active"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MY PROFILE -->
+  <div class="page" id="my-profile" data-name="My Profile">
+    <div style="flex:1;display:flex;flex-direction:column;">
+      <div style="padding:52px 22px 28px;background:linear-gradient(180deg,var(--bg2),var(--bg));display:flex;flex-direction:column;align-items:center;text-align:center;">
+        <div id="profileAvatar" style="width:84px;height:84px;border-radius:26px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:30px;font-weight:700;color:#fff;margin-bottom:14px;box-shadow:0 8px 24px rgba(79,70,229,.4);">A</div>
+        <div id="profileName" style="font-family:'Sora',sans-serif;font-size:20px;font-weight:700;margin-bottom:3px;">Your Name</div>
+        <div id="profileSub" style="font-size:13px;color:var(--tx2);margin-bottom:8px;">Class level · Department · State</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;justify-content:center;"><span class="badge b-pu" id="profileSchool">Your School</span><span class="badge b-gr">2 Career Matches</span></div>
+      </div>
+      <div class="sc px" style="padding-top:6px;">
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;">
+              <div style="background:var(--sf2);border-radius:var(--rs);padding:13px;text-align:center;"><div id="profileTests" style="font-size:20px;font-weight:700;font-family:'Sora',sans-serif;" class="gt">0</div><div style="font-size:10px;color:var(--tx3);">Tests Done</div></div>
+              <div style="background:var(--sf2);border-radius:var(--rs);padding:13px;text-align:center;"><div id="profileCareerCount" style="font-size:20px;font-weight:700;font-family:'Sora',sans-serif;" class="gt">0</div><div style="font-size:10px;color:var(--tx3);">Career Paths</div></div>
+              <div style="background:var(--sf2);border-radius:var(--rs);padding:13px;text-align:center;"><div id="profileSavedCount" style="font-size:20px;font-weight:700;font-family:'Sora',sans-serif;" class="gt">0</div><div style="font-size:10px;color:var(--tx3);">Saved</div></div>
+        </div>
+        <div id="profileAssessmentSummary" style="margin-bottom:16px;padding:14px;border:1px solid var(--br);border-radius:var(--r);background:rgba(255,255,255,0.02);">
+          <div style="font-size:13px;font-weight:600;margin-bottom:8px;color:var(--tx);">Assessment Summary</div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <div class="badge b-pu" id="profileSummaryTests">0 / 4 tests completed</div>
+            <div class="badge b-gr" id="profileSummaryStatus">No recent results</div>
+          </div>
+          <div id="profileSummaryDetail" style="font-size:11px;color:var(--tx3);margin-top:8px;line-height:1.5;">Complete all tests to unlock career recommendations on your profile.</div>
+          <div id="profileTestDetail" style="font-size:12px;color:var(--tx2);margin-top:12px;line-height:1.6;"></div>
+        </div>
+        <div id="profileResultPreview" style="margin-bottom:16px;display:none;"></div>
+        <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;">Account</div>
+        <div class="setrow" onclick="G('profile-basic')"><div class="setico" style="background:rgba(79,70,229,.1);">&#128100;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Edit Profile</div><div style="font-size:12px;color:var(--tx3);">Update personal information</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+        <div class="setrow" onclick="G('profile-upload')"><div class="setico" style="background:rgba(16,185,129,.1);">&#128196;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Upload Results</div><div style="font-size:12px;color:var(--tx3);">Enter your grades manually for the next assessment</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+        <div class="setrow" id="profileAssessmentActionRow" onclick="startAssessmentFromProfile()"><div class="setico" style="background:rgba(79,70,229,.1);">&#128300;</div><div style="flex:1;"><div id="profileAssessmentActionTitle" style="font-size:14px;font-weight:500;">Start Assessment</div><div id="profileAssessmentActionDesc" style="font-size:12px;color:var(--tx3);">Take your tests and unlock career recommendations</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+        <div class="setrow" onclick="G('view-results')"><div class="setico" style="background:rgba(79,70,229,.06);">&#128194;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Review Grades</div><div style="font-size:12px;color:var(--tx3);">Check the manual grades you entered</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+        <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin:14px 0 8px;">Assessments</div>
+        <div class="setrow" onclick="G('history')"><div class="setico" style="background:rgba(245,158,11,.1);">&#128203;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Assessment History</div><div style="font-size:12px;color:var(--tx3);">View past results and retake schedule</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+        <div class="setrow" onclick="G('career-results')"><div class="setico" style="background:rgba(124,58,237,.1);">&#127919;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Career Recommendations</div><div style="font-size:12px;color:var(--tx3);">View your latest AI recommendations</div></div><span style="color:var(--tx3);">&#8250;</span></div>
+
+        <!-- Markdown Styling -->
+        <style>
+          #aiSummaryReport h1, #aiSummaryReport h2, #aiSummaryReport h3 { color: var(--tx); margin-top: 18px; margin-bottom: 10px; font-family: 'Sora', sans-serif; font-weight: 600; }
+          #aiSummaryReport h3 { font-size: 15px; color: var(--pl); }
+          #aiSummaryReport p { margin-bottom: 12px; }
+          #aiSummaryReport ul, #aiSummaryReport ol { margin-left: 20px; margin-bottom: 14px; }
+          #aiSummaryReport li { margin-bottom: 6px; }
+          #aiSummaryReport strong { color: var(--tx); font-weight: 600; }
+        </style>
+
+        <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin:14px 0 8px;">App</div>
+        <div class="setrow"><div class="setico" style="background:rgba(236,72,153,.1);">&#128276;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;">Notifications</div></div><div id="notifToggle" onclick="toggleNotif()" style="width:42px;height:23px;background:var(--p);border-radius:100px;position:relative;cursor:pointer;"><div style="position:absolute;right:3px;top:3px;width:17px;height:17px;background:#fff;border-radius:50%;transition:right .2s;"></div></div></div>
+        <div class="setrow" style="border:none;" onclick="signOut()"><div class="setico" style="background:rgba(239,68,68,.1);">&#128682;</div><div style="flex:1;"><div style="font-size:14px;font-weight:500;color:var(--rd);">Sign Out</div></div></div>
+        <div style="height:16px;"></div>
+      </div>
+      <div class="mnav">
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>Home</span></div>
+        <div class="mni" onclick="G('assessment-hub')"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg><span>Assess</span></div>
+        <div class="mni" onclick="G('career-results')"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg><span>Results</span></div>
+        <div class="mni" onclick="G('saved')"><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg><span>Saved</span></div>
+        <div class="mni active"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>Profile</span></div>
+      </div>
+    </div>
+  </div>
+
+  </div><!-- /pscreen -->
+</div><!-- /phone -->
+</div><!-- /outer -->
+
+<div class="toast" id="toast"></div>
+
+<!-- Error banner for validation -->
+<div id="errBanner" style="display:none;position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#EF4444;color:#fff;padding:10px 20px;border-radius:100px;font-size:13px;font-weight:600;z-index:9999;max-width:340px;text-align:center;box-shadow:0 4px 20px rgba(239,68,68,.4);"></div>
+
+<!-- PWA Install Banner -->
+<div id="installBanner" style="display:none;position:fixed;bottom:0;left:0;right:0;z-index:9998;background:linear-gradient(135deg,#1A1828,#252338);border-top:1px solid rgba(79,70,229,.3);padding:14px 18px;align-items:center;gap:12px;box-shadow:0 -8px 32px rgba(0,0,0,.5);">
+  <div style="width:46px;height:46px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+    <svg width="24" height="24" viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="16" stroke="white" stroke-width="2" opacity=".3"/><path d="M14 22c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="white" stroke-width="2.5" stroke-linecap="round"/><circle cx="22" cy="22" r="3" fill="white"/></svg>
+  </div>
+  <div style="flex:1;"><div style="font-size:13px;font-weight:700;color:var(--tx);margin-bottom:2px;">Install CareerPredictor</div><div style="font-size:11px;color:var(--tx3);">Add to home screen for the full app experience</div></div>
+  <button onclick="installApp()" style="background:var(--grad);color:white;border:none;border-radius:9px;padding:9px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;">Install</button>
+  <button onclick="document.getElementById('installBanner').style.display='none'" style="background:rgba(255,255,255,.07);color:var(--tx3);border:none;border-radius:7px;padding:9px;font-size:15px;cursor:pointer;">&#10005;</button>
+</div>
+
+<script>
+
+
+/* ============================================================
+   SMART CAREER PREDICTOR — Full JavaScript (Integrated Backend Version)
+   ============================================================ */
+  
+/* ── App State ── */
+const isLocalEnv = window.location.hostname === 'localhost' || 
+                   window.location.hostname === '127.0.0.1' || 
+                   window.location.protocol === 'file:' || 
+                   !window.location.hostname;
+
+const API_BASE_URL = isLocalEnv 
+  ? (window.location.origin && window.location.origin !== 'null' && window.location.protocol !== 'file:' ? window.location.origin : 'http://127.0.0.1:8000') 
+  : "https://smart-career-predictor-code.onrender.com";
+
+const APP = {
+  user: { name:'', email:'', phone:'', dob:'', gender:'', password:'' },
+  school: { name:'', type:'', state:'', classLevel:'', dept:'', lang:'English' },
+  uploaded: [],       // e.g. ['SSS 2','SSS 3']
+  subjectGrades: {},  // Merged view of manual + file grades for display
+  manualGrades: {},   // grades entered manually via the form
+  fileUploadedGrades: {}, // legacy file grades, not used in the current manual-only flow
+  testsDone: {},      // { 'SSS 2': true }
+  loggedIn: false,
+  notif: true,
+  assessmentResults: null,
+  recommendationPending: false,
+  assessmentSession: null,
+  canEnterTests: false,
+  allowedTestPage: '',
+  navHistory: [],
+  history: [],
+  savedCareers: [],
+  isRetaking: false
+};
+
+let currentCareerName = '';
+
+// Department -> subjects map used for manual grade entry. Compulsory subjects are ensured here.
+let DEPT_SUBJECT_MAP = {
+  "Science": ["Mathematics","English","Civic Education","Physics","Chemistry","Biology","Further Mathematics","Geography","Technical Drawing","Agricultural Science"],
+  "Arts": ["Mathematics","English","Civic Education","Literature in English","Government","History","Economics","Creative Arts","Christian Religious Studies/Islamic Studies"],
+  "Commercial": ["Mathematics","English","Civic Education","Economics","Financial Accounting","Commerce","Government","Marketing"]
+};
+
+// Try to load authoritative mapping from backend to keep frontend and backend in sync.
+(async function loadDeptSubjects(){
+  try{
+    const res = await fetch(API_BASE_URL + '/department_subjects');
+    if(res.ok){
+      const mapping = await res.json();
+      // Normalize keys and ensure arrays
+      Object.keys(mapping).forEach(k=>{
+        if(Array.isArray(mapping[k])){
+          DEPT_SUBJECT_MAP[k] = mapping[k];
+        }
+      });
+      console.log('Department subjects loaded from backend');
+    }
+  }catch(e){
+    // ignore - fallback to embedded map
+    console.warn('Could not load department subjects from backend, using embedded map');
+  }
+})();
+
+
+const CAREER_DETAILS = {
+  "Agriculture & Environmental Sciences": {
+    description: "Focus on modern food production, biotechnology, crop science, and environmental management in the Nigerian context.",
+    courses: [
+      { name: "Agricultural Science", sub: "5 years · B.Agric", badge: "Best Fit" },
+      { name: "Soil Science & Land Management", sub: "5 years · B.Agric", badge: "High Demand" },
+      { name: "Environmental Toxicology", sub: "4 years · B.Sc", badge: "Specialised" },
+      { name: "Agribusiness Management", sub: "4 years · B.Sc", badge: "Industry Focus" }
+    ],
+    unis: [
+      { logo: "FUNAAB", name: "Federal University of Agriculture, Abeokuta", loc: "Abeokuta, Ogun · Federal", courses: "✓ B.Agric • Agribusiness", badge: "Top Specialised" },
+      { logo: "UI", name: "University of Ibadan", loc: "Ibadan, Oyo · Federal", courses: "✓ Agricultural Economics • Soil Science", badge: "Top Research" },
+      { logo: "ABU", name: "Ahmadu Bello University", loc: "Zaria, Kaduna · Federal", courses: "✓ Crop Science • Animal Science", badge: "Top Agritech" }
+    ],
+    jobs: [
+      { title: "Agricultural Consultant", sub: "Advise farmers and agribusinesses", badge: "High Demand" },
+      { title: "Farm Operations Manager", sub: "Oversee crop production and supply chains", badge: "Field Ready" },
+      { title: "Sustainability Analyst", sub: "Recommend environmentally friendly practices", badge: "Emerging" }
+    ],
+    people: [
+      { name: "Akinwumi Adesina", title: "President, African Development Bank", education: "Obafemi Awolowo University Graduate" },
+      { name: "Kola Masha", title: "Co-founder, Sahel Capital", education: "University of Ibadan Graduate" },
+      { name: "Philip Ezeagwu", title: "Agribusiness Investor", education: "University of Nigeria Graduate" }
+    ],
+    industries: [
+      { icon: "🌾", name: "Agribusiness & Food Processing", details: "Dangote Farms, Flour Mills of Nigeria, Olam Nigeria", badge: "Leading" },
+      { icon: "🚜", name: "Agro-inputs & Logistics", details: "Notore, Presco, Livestock Feeds Plc", badge: "Growing" },
+      { icon: "🌱", name: "Environmental Services", details: "Farmcrowdy, Thrive Agric, Green Impact", badge: "Innovative" }
+    ]
+  },
+  "Computer Science & IT": {
+    description: "Design, build, and secure software applications, databases, cloud systems, and networks.",
+    courses: [
+      { name: "Computer Science", sub: "4 years · B.Sc", badge: "Best Fit" },
+      { name: "Software Engineering", sub: "4 years · B.Sc", badge: "Specialised" },
+      { name: "Information Technology", sub: "4 years · B.Tech", badge: "Practical" },
+      { name: "Cybersecurity", sub: "4 years · B.Sc", badge: "High Demand" }
+    ],
+    unis: [
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ Computer Science • Software Engineering", badge: "Top CS" },
+      { logo: "UI", name: "University of Ibadan", loc: "Ibadan, Oyo · Federal", courses: "✓ Computer Science • Information Technology", badge: "Research" },
+      { logo: "OAU", name: "Obafemi Awolowo University", loc: "Ile-Ife, Osun · Federal", courses: "✓ Computer Science • Software Engineering", badge: "Strong Tech" }
+    ],
+    jobs: [
+      { title: "Software Engineer", sub: "Build web, mobile, and enterprise apps", badge: "High Demand" },
+      { title: "Cybersecurity Analyst", sub: "Protect systems and data", badge: "Critical" },
+      { title: "Data Analyst", sub: "Turn business data into insights", badge: "Growing" }
+    ],
+    people: [
+      { name: "Shola Akinlade", title: "Co-founder, Paystack", education: "Babcock University Graduate" },
+      { name: "Tayo Oviosu", title: "Founder, Paga", education: "University of Lagos Graduate" },
+      { name: "Iyinoluwa Aboyeji", title: "Co-founder, Flutterwave & Andela", education: "University of Waterloo Graduate" }
+    ],
+    industries: [
+      { icon: "💳", name: "FinTech", details: "Paystack, Flutterwave, Interswitch", badge: "Booming" },
+      { icon: "📱", name: "Telecom", details: "MTN, Airtel, 9Mobile", badge: "Stable" },
+      { icon: "🛒", name: "E-commerce", details: "Jumia, Konga, Jiji", badge: "Growing" }
+    ]
+  },
+  "Business & Finance": {
+    description: "Manage corporate finances, accounting, investment banking, and the rapidly growing fintech sector.",
+    courses: [
+      { name: "Accounting", sub: "4 years · B.Sc", badge: "Best Fit" },
+      { name: "Finance & Banking", sub: "4 years · B.Sc", badge: "High Demand" },
+      { name: "Business Administration", sub: "4 years · B.Sc", badge: "Versatile" }
+    ],
+    unis: [
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ Accounting • Finance", badge: "Top Business" },
+      { logo: "UI", name: "University of Ibadan", loc: "Ibadan, Oyo · Federal", courses: "✓ Economics • Finance", badge: "Leading" },
+      { logo: "PAU", name: "Pan-Atlantic University", loc: "Lagos · Private", courses: "✓ Business Admin • Finance", badge: "Fintech Focus" }
+    ],
+    jobs: [
+      { title: "Financial Analyst", sub: "Analyze data for investments", badge: "High Demand" },
+      { title: "Accountant", sub: "Prepare financial reports and compliance", badge: "Core" },
+      { title: "Investment Officer", sub: "Manage portfolios and capital growth", badge: "Strategic" }
+    ],
+    people: [
+      { name: "Tony Elumelu", title: "Founder, Heirs Holdings", education: "Ambrose Alli University Graduate" },
+      { name: "Herbert Wigwe", title: "Former CEO, Access Bank", education: "University of Nigeria Graduate" },
+      { name: "Bismarck Rewane", title: "CEO, Financial Derivatives Company", education: "Loughborough University Graduate" }
+    ],
+    industries: [
+      { icon: "🏦", name: "Banking & FinTech", details: "GTBank, UBA, Access Bank, Kuda", badge: "Leading" },
+      { icon: "🧾", name: "Insurance & Investments", details: "AIICO, Coronation Merchant Bank, Stanbic IBTC", badge: "Growing" },
+      { icon: "🛍️", name: "FMCG & Retail", details: "Nestle Nigeria, Unilever Nigeria, PZ Cussons", badge: "Stable" }
+    ]
+  },
+  "Creative Arts & Design": {
+    description: "Graphic design, fine arts, fashion, music production, digital animation, and UI/UX design.",
+    courses: [
+      { name: "Fine & Applied Arts", sub: "4 years · B.A", badge: "Best Fit" },
+      { name: "Creative Arts", sub: "4 years · B.A", badge: "Specialised" },
+      { name: "Fashion Design", sub: "4 years · B.A", badge: "Trend" },
+      { name: "Graphic Design", sub: "4 years · B.Sc", badge: "Digital" }
+    ],
+    unis: [
+      { logo: "OAU", name: "Obafemi Awolowo University", loc: "Ile-Ife, Osun · Federal", courses: "✓ Fine Arts • Creative Arts", badge: "Top Creative Arts" },
+      { logo: "LASU", name: "Lagos State University", loc: "Ojo, Lagos · State", courses: "✓ Creative Arts • Theatre Arts", badge: "Strong Arts" },
+      { logo: "YABATECH", name: "Yaba College of Technology", loc: "Yaba, Lagos · Polytechnic", courses: "✓ Graphic Design • Fashion Design", badge: "Creative Hub" }
+    ],
+    jobs: [
+      { title: "UI/UX Designer", sub: "Design digital experiences", badge: "High Demand" },
+      { title: "Graphic Designer", sub: "Create branding and campaigns", badge: "Creative" },
+      { title: "Fashion Designer", sub: "Develop apparel and fashion lines", badge: "Trend" }
+    ],
+    people: [
+      { name: "Mo Abudu", title: "Founder, EbonyLife Media", education: "University of Lagos Graduate" },
+      { name: "Burna Boy", title: "International Musician", education: "Creative Industry Leader" },
+      { name: "Kelechi Amadi-Obi", title: "Photographer & Creative Director", education: "University of Calabar Graduate" }
+    ],
+    industries: [
+      { icon: "🎬", name: "Entertainment & Media", details: "EbonyLife Media, Multichoice, Filmhouse", badge: "Leading" },
+      { icon: "👗", name: "Fashion & Design", details: "Zizi Cardow, Lisa Folawiyo, Tiffany Amber", badge: "Vibrant" },
+      { icon: "📣", name: "Advertising & Creative", details: "X3M Ideas, DDB Lagos, Insight Publicis", badge: "Growing" }
+    ]
+  },
+  "Education & Humanities": {
+    description: "Teaching, history, languages, philosophy, and human services.",
+    courses: [
+      { name: "Education", sub: "4 years · B.Ed", badge: "Best Fit" },
+      { name: "English & Literature", sub: "4 years · B.A", badge: "High Demand" },
+      { name: "History & International Studies", sub: "4 years · B.Sc", badge: "Critical" },
+      { name: "Sociology", sub: "4 years · B.Sc", badge: "Research" }
+    ],
+    unis: [
+      { logo: "UI", name: "University of Ibadan", loc: "Ibadan, Oyo · Federal", courses: "✓ Education • English", badge: "Top Humanities" },
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ History • English", badge: "Leading" },
+      { logo: "UNN", name: "University of Nigeria, Nsukka", loc: "Nsukka, Enugu · Federal", courses: "✓ Sociology • International Studies", badge: "Strong Research" }
+    ],
+    jobs: [
+      { title: "Educator / Lecturer", sub: "Teach and mentor students", badge: "High Demand" },
+      { title: "Curriculum Developer", sub: "Design learning programs and materials", badge: "Impact" },
+      { title: "Research Analyst", sub: "Study social patterns and policy", badge: "Insightful" }
+    ],
+    people: [
+      { name: "Wole Soyinka", title: "Nobel Laureate in Literature", education: "University College Ibadan Graduate" },
+      { name: "Chimamanda Ngozi Adichie", title: "Writer & Cultural Critic", education: "University of Nigeria Graduate" },
+      { name: "Oby Ezekwesili", title: "Education Activist & Former Minister", education: "University of Nigeria Graduate" }
+    ],
+    industries: [
+      { icon: "📚", name: "Education & Publishing", details: "Schools, Universities, Farafina Books", badge: "Core" },
+      { icon: "🧑‍💻", name: "EdTech", details: "uLesson, Tuteria, PrepClass", badge: "Growing" },
+      { icon: "🏛️", name: "NGOs & Research", details: "LEAP Africa, Centre for Democracy", badge: "Influential" }
+    ]
+  },
+  "Engineering & Technology": {
+    description: "Civil, electrical, mechanical, and chemical engineering. Design, construction, and infrastructure.",
+    courses: [
+      { name: "Mechanical Engineering", sub: "5 years · B.Eng", badge: "Best Fit" },
+      { name: "Civil Engineering", sub: "5 years · B.Eng", badge: "High Demand" },
+      { name: "Electrical & Electronics Engineering", sub: "5 years · B.Eng", badge: "Core" },
+      { name: "Chemical Engineering", sub: "5 years · B.Eng", badge: "Industrial" }
+    ],
+    unis: [
+      { logo: "FUTO", name: "Federal University of Technology, Owerri", loc: "Owerri, Imo · Federal", courses: "✓ Mechanical • Civil", badge: "Top Engineering" },
+      { logo: "FUBK", name: "Federal University of Birnin Kebbi", loc: "Birnin Kebbi, Kebbi · Federal", courses: "✓ Electrical • Chemical", badge: "Industry Focus" },
+      { logo: "UNN", name: "University of Nigeria, Nsukka", loc: "Nsukka, Enugu · Federal", courses: "✓ Civil • Mechanical", badge: "Strong Labs" }
+    ],
+    jobs: [
+      { title: "Civil Engineer", sub: "Design and construct infrastructure", badge: "High Demand" },
+      { title: "Electrical Engineer", sub: "Power systems and electronics", badge: "Stable" },
+      { title: "Mechanical Engineer", sub: "Machinery and systems design", badge: "Core" }
+    ],
+    people: [
+      { name: "Silas Adekunle", title: "Robotics Engineer", education: "Technology Innovator" },
+      { name: "Adebola Adekanye", title: "Structural Engineer", education: "University of Lagos Graduate" },
+      { name: "Chinonso Okonkwo", title: "Electrical Systems Specialist", education: "University of Nigeria Graduate" }
+    ],
+    industries: [
+      { icon: "🏗️", name: "Construction & Infrastructure", details: "Julius Berger, CCECC, Reynolds Construction", badge: "Large" },
+      { icon: "⚡", name: "Power & Energy", details: "Nigerian National Petroleum Company, Siemens Nigeria", badge: "Critical" },
+      { icon: "🏭", name: "Manufacturing", details: "Dangote Group, Lafarge Africa, Unilever Nigeria", badge: "Expanding" }
+    ]
+  },
+  "Entrepreneurship & Management": {
+    description: "Building startups, project management, sales, marketing, and corporate administration.",
+    courses: [
+      { name: "Business Administration", sub: "4 years · B.Sc", badge: "Best Fit" },
+      { name: "Entrepreneurship", sub: "4 years · B.Sc", badge: "Specialised" },
+      { name: "Project Management", sub: "4 years · B.Sc", badge: "Leadership" },
+      { name: "Marketing", sub: "4 years · B.Sc", badge: "Strategic" }
+    ],
+    unis: [
+      { logo: "PAU", name: "Pan-Atlantic University", loc: "Lagos · Private", courses: "✓ Business Admin • Entrepreneurship", badge: "Top Management" },
+      { logo: "CU", name: "Covenant University", loc: "Ota, Ogun · Private", courses: "✓ Business Admin • Entrepreneurship", badge: "Strong Startup" },
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ Marketing • Management", badge: "Diverse" }
+    ],
+    jobs: [
+      { title: "Business Development Manager", sub: "Drive company growth and partnerships", badge: "High Demand" },
+      { title: "Operations Manager", sub: "Oversee daily business functions", badge: "Core" },
+      { title: "Startup Founder", sub: "Launch and scale new ventures", badge: "Dynamic" }
+    ],
+    people: [
+      { name: "Aliko Dangote", title: "Founder, Dangote Group", education: "Al-Azhar University Graduate" },
+      { name: "Tony Elumelu", title: "Founder, Tony Elumelu Foundation", education: "Ambrose Alli University Graduate" },
+      { name: "Tara Fela-Durotoye", title: "Founder, House of Tara", education: "University of Texas Graduate" }
+    ],
+    industries: [
+      { icon: "🏢", name: "Corporate & FMCG", details: "Dangote Group, Nestle Nigeria, PZ Cussons", badge: "Established" },
+      { icon: "🚀", name: "Startups & Tech", details: "Andela, Gokada, Kobo360", badge: "Fast" },
+      { icon: "🛒", name: "Retail & Services", details: "Jumia, Shoprite Nigeria, Mr Price", badge: "Growing" }
+    ]
+  },
+  "Law & Social Sciences": {
+    description: "Legal frameworks, human rights, sociology, political science, and international relations.",
+    courses: [
+      { name: "Law", sub: "5 years · LL.B", badge: "Best Fit" },
+      { name: "Political Science", sub: "4 years · B.Sc", badge: "High Demand" },
+      { name: "Sociology", sub: "4 years · B.Sc", badge: "Insightful" }
+    ],
+    unis: [
+      { logo: "UNILORIN", name: "University of Ilorin", loc: "Ilorin, Kwara · Federal", courses: "✓ Law • Political Science", badge: "Top Law" },
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ Law • Sociology", badge: "Broad" },
+      { logo: "ABU", name: "Ahmadu Bello University", loc: "Zaria, Kaduna · Federal", courses: "✓ Law • International Relations", badge: "Leading" }
+    ],
+    jobs: [
+      { title: "Corporate Lawyer", sub: "Legal counsel for businesses", badge: "High Demand" },
+      { title: "Policy Analyst", sub: "Shape public policy and strategy", badge: "Impactful" },
+      { title: "Human Rights Advocate", sub: "Support legal and social justice causes", badge: "Critical" }
+    ],
+    people: [
+      { name: "Femi Falana", title: "Human Rights Lawyer", education: "University of Lagos Graduate" },
+      { name: "Mary Odili", title: "Former Supreme Court Justice", education: "University of London Graduate" },
+      { name: "Oby Ezekwesili", title: "Activist & Policy Advisor", education: "University of Nigeria Graduate" }
+    ],
+    industries: [
+      { icon: "⚖️", name: "Legal & Public Sector", details: "Falana & Falana, Ministry of Justice, NPA", badge: "Stable" },
+      { icon: "🌍", name: "NGOs & Advocacy", details: "Amnesty International Nigeria, LEAP Africa", badge: "Influential" },
+      { icon: "🏛️", name: "Policy & Governance", details: "Federal Civil Service, NDDC, CBN", badge: "Established" }
+    ]
+  },
+  "Mass Communication & Media": {
+    description: "Journalism, broadcasting, public relations, and digital content creation.",
+    courses: [
+      { name: "Mass Communication", sub: "4 years · B.Sc", badge: "Best Fit" },
+      { name: "Journalism", sub: "4 years · B.A", badge: "High Demand" },
+      { name: "Public Relations", sub: "4 years · B.Sc", badge: "Strategic" }
+    ],
+    unis: [
+      { logo: "UNN", name: "University of Nigeria, Nsukka", loc: "Nsukka, Enugu · Federal", courses: "✓ Mass Comm • Journalism", badge: "Top Mass Comm" },
+      { logo: "BU", name: "Babcock University", loc: "Ilishan-Remo, Ogun · Private", courses: "✓ Mass Comm • Public Relations", badge: "Popular" },
+      { logo: "LASU", name: "Lagos State University", loc: "Ojo, Lagos · State", courses: "✓ Mass Comm • Advertising", badge: "Creative" }
+    ],
+    jobs: [
+      { title: "Broadcast Journalist", sub: "Report news across radio and TV", badge: "High Demand" },
+      { title: "Public Relations Specialist", sub: "Manage company communication", badge: "Core" },
+      { title: "Content Creator", sub: "Build digital media projects", badge: "Growing" }
+    ],
+    people: [
+      { name: "Mo Abudu", title: "Founder, EbonyLife Media", education: "University of Lagos Graduate" },
+      { name: "Ebuka Obi-Uchendu", title: "TV Host", education: "University of Abuja Graduate" },
+      { name: "Kunle Afolayan", title: "Filmmaker", education: "University of Ilorin Graduate" }
+    ],
+    industries: [
+      { icon: "🎙️", name: "Broadcast & Publishing", details: "Channels TV, AIT, Nation Newspapers", badge: "Established" },
+      { icon: "📲", name: "Digital Media", details: "Pulse, BellaNaija, Linda Ikeji", badge: "Trending" },
+      { icon: "📣", name: "Advertising & PR", details: "X3M Ideas, DDB Lagos, Insight Publicis", badge: "Creative" }
+    ]
+  },
+  "Medicine & Health Sciences": {
+    description: "Medicine, pharmacy, nursing, dentistry, medical lab sciences, and public health.",
+    courses: [
+      { name: "Medicine and Surgery", sub: "6 years · MBBS", badge: "Best Fit" },
+      { name: "Pharmacy", sub: "5 years · Pharm.D", badge: "High Demand" },
+      { name: "Nursing Science", sub: "5 years · B.NSc", badge: "Essential" },
+      { name: "Medical Laboratory Science", sub: "5 years · B.Sc", badge: "Specialised" }
+    ],
+    unis: [
+      { logo: "UI", name: "University of Ibadan", loc: "Ibadan, Oyo · Federal", courses: "✓ Medicine • Pharmacy", badge: "Top Medical" },
+      { logo: "UNILAG", name: "University of Lagos", loc: "Akoka, Lagos · Federal", courses: "✓ Medicine • Public Health", badge: "Leading" },
+      { logo: "UNN", name: "University of Nigeria, Nsukka", loc: "Nsukka, Enugu · Federal", courses: "✓ Nursing • Medical Laboratory Science", badge: "Strong Clinical" }
+    ],
+    jobs: [
+      { title: "Medical Doctor", sub: "Provide patient care", badge: "High Demand" },
+      { title: "Pharmacist", sub: "Manage medications and patient safety", badge: "Essential" },
+      { title: "Medical Laboratory Scientist", sub: "Perform diagnostic testing", badge: "Specialised" }
+    ],
+    people: [
+      { name: "Dr. Stella Ameyo Adadevoh", title: "Physician and Public Health Hero", education: "University of Lagos Alumna" },
+      { name: "Dr. Ola Orekunrin", title: "Founder, Flying Doctors Nigeria", education: "University of Wales Graduate" },
+      { name: "Late Prof. Dora Akunyili", title: "Pharmacologist & Public Servant", education: "University of Nigeria Graduate" }
+    ],
+    industries: [
+      { icon: "⚕️", name: "Healthcare & Pharmaceuticals", details: "Lagos University Teaching Hospital, GSK Nigeria, May & Baker", badge: "Core" },
+      { icon: "💊", name: "HealthTech", details: "Helium Health, Reliance HMO, Dojah", badge: "Innovative" },
+      { icon: "🏥", name: "Clinical Services", details: "National Hospital Abuja, St. Nicholas Hospital, Cedarcrest Hospitals", badge: "Trusted" }
+    ]
+  }
+};
+
+const TEST_RUNNER = {
+  category: '',
+  questions: [],
+  currentIndex: 0,
+  answers: {}
+};
+
+/* ── Levels & groups ── */
+const LEVELS = ['SSS 1','SSS 2','SSS 3'];
+const UPLOAD_RULES = {
+  'SSS 1':['SSS 1'], 'SSS 2':['SSS 1','SSS 2'],
+  'SSS 3':['SSS 1','SSS 2','SSS 3']
+};
+const TESTS = [
+  {id:'aptitude-test',  icon:'&#129518;', title:'Aptitude Test',      sub:'Logical reasoning · 10 questions', category: 'aptitude'},
+  {id:'cognitive-test', icon:'&#129504;', title:'Cognitive Test',      sub:'Memory & processing · 10 questions', category: 'cognitive'},
+  {id:'personality-test',icon:'&#129494;',title:'Personality Test',   sub:'Traits & behaviour · 10 questions', category: 'personality'},
+  {id:'psychometric-test',  icon:'&#11088;',  title:'Psychometric Test', sub:'Career interests · 10 questions', category: 'psychometric'},
+];
+
+function lvlIdx(l){ return LEVELS.indexOf(l); }
+function getGroup(cls){
+  if(['SSS 1','SSS 2'].includes(cls)) return 'A';
+  if(['SSS 3'].includes(cls)) return 'B';
+  return 'C';
+}
+const GROUP_LEVELS = {A:['SSS 1','SSS 2'], B:['SSS 3'], C:[]};
+const UNLOCK_RESULT = {A:'SSS 3', B:'SSS 1', C:null};
+const NEXT_GROUP_START = {A:'SSS 3', B:'SSS 2', C:null};
+
+function canTakeTest(){
+  const cls = APP.school.classLevel || 'SSS 1';
+  const g = getGroup(cls);
+  const groupDone = GROUP_LEVELS[g].some(l => APP.testsDone[l]);
+  if(!groupDone) return {can:true, reason:''};
+  const need = UNLOCK_RESULT[g];
+  if(!need) return {can:false, reason:'You have completed all assessment groups. No further retakes available.'};
+  if(!APP.uploaded.includes(need))
+    return {can:false, reason:'Upload your '+need+' total result to unlock your next assessment attempt.'};
+  const nextStart = NEXT_GROUP_START[g];
+  if(nextStart && lvlIdx(cls) < lvlIdx(nextStart))
+    return {can:false, reason:'Move to '+nextStart+' or above before retaking.'};
+  return {can:true, reason:''};
+}
+
+/* ── Validation helpers ── */
+function showErr(msg){
+  const b = document.getElementById('errBanner');
+  b.textContent = msg; b.style.display='block';
+  setTimeout(()=>{ b.style.display='none'; }, 3500);
+}
+function val(id){ return (document.getElementById(id)||{}).value||''; }
+function inp(sel){ return document.querySelector(sel); }
+function shake(id){ const el=document.getElementById(id); if(el){el.style.borderColor='var(--rd)';setTimeout(()=>el.style.borderColor='',1500);} }
+
+/* ── API Integrations ── */
+async function syncProfileWithBackend() {
+  if (!APP.loggedIn) return;
+  try {
+    await fetch(API_BASE_URL + '/update_profile', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        student_id: APP.user.email,
+        school_name: APP.school.name,
+        school_type: APP.school.type,
+        state: APP.school.state,
+        class_level: APP.school.classLevel,
+        department: APP.school.dept,
+        language: APP.school.lang,
+        uploaded_results: JSON.stringify(APP.uploaded)
+      })
+    });
+    await loadAssessmentSession();
+  } catch (e) {
+    console.error("Failed to sync profile:", e);
+  }
+}
+
+async function loadAssessmentSession() {
+  const studentId = (APP.user.email || 'guest').trim();
+  try {
+    const response = await fetch(API_BASE_URL + '/assessment/' + encodeURIComponent(studentId));
+    if (response.ok) {
+      APP.assessmentSession = await response.json();
+    }
+  } catch (e) {
+    console.error("Error loading assessment session:", e);
+  }
+}
+
+async function loadHistory() {
+  const studentId = (APP.user.email || 'guest').trim();
+  try {
+    const response = await fetch(API_BASE_URL + '/history/' + encodeURIComponent(studentId));
+    if (response.ok) {
+      APP.history = await response.json();
+    }
+  } catch (e) {
+    console.error("Error loading history:", e);
+  }
+}
+
+async function handleLogin() {
+  const em = document.querySelector('#login input[type="email"]');
+  const pw = document.querySelector('#login input[type="password"]');
+  if(!em || !em.value.trim() || !em.value.includes('@')){
+    showErr('Please enter a valid email address'); em && (em.style.borderColor='var(--rd)'); return;
+  }
+  if(!pw || pw.value.length < 6){
+    showErr('Password must be at least 6 characters'); pw && (pw.style.borderColor='var(--rd)'); return;
+  }
+  
+  try {
+    const res = await fetch(API_BASE_URL + '/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: em.value.trim(), password: pw.value })
+    });
+    if (!res.ok) {
+      const err = await res.json();
+      showErr(err.detail || 'Invalid email or password');
+      return;
+    }
+    const data = await res.json();
+    APP.loggedIn = true;
+    APP.user.email = data.student.email;
+    APP.user.name = data.student.name;
+    APP.user.phone = data.student.phone;
+    APP.school.name = data.student.school_name || '';
+    APP.school.type = data.student.school_type || 'Government School';
+    APP.school.state = data.student.state || 'Lagos';
+    APP.school.classLevel = data.student.class_level || 'SSS 1';
+    APP.school.dept = data.student.department || 'Science';
+    APP.school.lang = data.student.language || 'English';
+    try {
+      const parsed = JSON.parse(data.student.uploaded_results || '[]');
+      if (Array.isArray(parsed)) {
+        APP.uploaded = parsed;
+      } else if (parsed && typeof parsed === 'object') {
+        // shape may be: { level: 'SSS 1', subject_grades: {...}, manual_grades:{}, file_grades:{} }
+        APP.fileUploadedGrades = parsed.file_grades || {};
+        APP.manualGrades = parsed.manual_grades || {};
+        if (parsed.subject_grades) {
+          // prefer manual overrides over file grades
+          APP.subjectGrades = Object.assign({}, APP.fileUploadedGrades || {}, APP.manualGrades || {});
+        }
+        if (parsed.level && !APP.uploaded.includes(parsed.level)) {
+          APP.uploaded.push(parsed.level);
+        }
+      } else {
+        APP.uploaded = [];
+      }
+    } catch(e) {
+      APP.uploaded = [];
+    }
+    try {
+      APP.savedCareers = JSON.parse(localStorage.getItem('scp_saved_careers_' + APP.user.email) || '[]');
+    } catch(e) {
+      APP.savedCareers = [];
+    }
+    
+    TEST_RUNNER.answers = {};
+    APP.testsDone = {};
+    APP.assessmentResults = null;
+    APP.navHistory = [];
+    APP.canEnterTests = false;
+    APP.allowedTestPage = '';
+    
+    await loadAssessmentSession();
+    await loadHistory();
+    
+    T('Welcome back, ' + APP.user.name + ' 👋');
+    const nextScreen = APP.school.name && APP.school.dept ? 'my-profile' : 'profile-basic';
+    G(nextScreen);
+  } catch (e) {
+    showErr('Server connection failed. Try again.');
+  }
+}
+
+async function handleSignup() {
+  const cur = document.getElementById('signup');
+  const nameI = cur.querySelector('input[placeholder="Enter your full name"]');
+  const emailI = cur.querySelector('input[type="email"]');
+  const phoneI = cur.querySelector('input[type="tel"]');
+  const dobI = cur.querySelector('input[type="date"]');
+  const pwI = cur.querySelector('input[type="password"]');
+  const genderEl = cur.querySelector('.gcard.sel');
+  const chk = cur.querySelector('input[type="checkbox"]');
+  
+  if (!nameI.value.trim() || !emailI.value.trim() || !phoneI.value.trim() || !dobI.value || !pwI.value) {
+    showErr('Please fill in all fields');
+    return;
+  }
+  if (!emailI.value.includes('@')) {
+    showErr('Enter a valid email address');
+    return;
+  }
+  if (pwI.value.length < 8) {
+    showErr('Password must be at least 8 characters');
+    return;
+  }
+  if (!genderEl) {
+    showErr('Please select your gender');
+    return;
+  }
+  if (!chk.checked) {
+    showErr('Please agree to the Terms of Service');
+    return;
+  }
+  
+  const gender = genderEl.querySelector('.glbl').textContent;
+  
+  try {
+    const res = await fetch(API_BASE_URL + '/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name: nameI.value.trim(),
+        email: emailI.value.trim(),
+        password: pwI.value,
+        phone: phoneI.value.trim(),
+        dob: dobI.value,
+        gender: gender
+      })
+    });
+    
+    if (!res.ok) {
+      const err = await res.json();
+      showErr(err.detail || 'Registration failed');
+      return;
+    }
+    
+    const data = await res.json();
+    APP.user.email = emailI.value.trim();
+    APP.user.name = nameI.value.trim();
+    APP.user.gender = gender;
+    APP.loggedIn = true;
+    APP.savedCareers = [];
+    
+    TEST_RUNNER.answers = {};
+    APP.testsDone = {};
+    APP.assessmentResults = null;
+    APP.navHistory = [];
+    APP.canEnterTests = false;
+    APP.allowedTestPage = '';
+    
+    T('Account created successfully!');
+    G('profile-basic');
+  } catch (e) {
+    showErr('Server connection failed. Try again.');
+  }
+}
+
+async function runRecommendationFlow(){
+  const studentId = (APP.user.email || 'guest').trim();
+  APP.recommendationPending = true;
+  try {
+    const response = await fetch(API_BASE_URL + '/assessment/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ student_id: studentId, answers: TEST_RUNNER.answers })
+    });
+    if(!response.ok){ throw new Error('Recommendation request failed'); }
+    const data = await response.json();
+    APP.assessmentResults = data;
+    APP.recommendationPending = false;
+    APP.isRetaking = false;
+    
+    await loadHistory();
+    
+    renderResultsPage();
+    G('career-results');
+  } catch (error) {
+    APP.recommendationPending = false;
+    showErr('Unable to load AI recommendations right now.');
+    G('career-results');
+  }
+}
+
+function renderResultsPage(){
+  if(!APP.assessmentResults) {
+    const listContainer = document.querySelector('#career-results .sc');
+    if (listContainer) {
+      listContainer.innerHTML = `
+        <div style="padding:40px 20px;text-align:center;background:var(--sf);border-radius:var(--r);border:1px dashed var(--br2);">
+          <div style="font-size:36px;margin-bottom:12px;"></div>
+          <div style="font-family:'Sora',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px;">Recommendations Locked</div>
+          <p style="font-size:13px;color:var(--tx3);line-height:1.6;margin-bottom:16px;">Complete all 4 assessments to unlock your tailored career matches and detailed AI mentor advice.</p>
+          <button class="btn btn-p btn-sm" onclick="G('assessment-hub')">Go to Assessments</button>
+        </div>`;
+    }
+    return;
+  }
+
+  const prediction = APP.assessmentResults.prediction || {};
+  const gemini = APP.assessmentResults.gemini_recommendation || {};
+  const profileSummary = APP.assessmentResults.profile_summary || {};
+  const testScores = APP.assessmentResults.test_scores || {};
+  const top3 = Array.isArray(prediction.top_3) ? prediction.top_3 : [];
+  
+  const primary = top3[0] || { 
+    career: prediction.predicted_career || 'Software Engineering', 
+    confidence_percent: prediction.confidence_percent || 75 
+  };
+  const alt = top3[1] || { 
+    career: 'Data Science & Analytics', 
+    confidence_percent: Math.max(50, (prediction.confidence_percent || 75) - 12) 
+  };
+  const broader = top3[2] || { 
+    career: 'Electrical Engineering', 
+    confidence_percent: Math.max(45, (prediction.confidence_percent || 75) - 22) 
+  };
+
+  const hasSummary = profileSummary.department;
+  const aptScore = testScores.aptitude_score_10 != null ? testScores.aptitude_score_10.toFixed(1) : 'N/A';
+  const cogScore = testScores.cognitive_score_10 != null ? testScores.cognitive_score_10.toFixed(1) : 'N/A';
+  const psyScore = testScores.psychometric_avg_5 != null ? testScores.psychometric_avg_5.toFixed(2) : 'N/A';
+  const perScore = testScores.sentiment_avg_5 != null ? testScores.sentiment_avg_5.toFixed(2) : 'N/A';
+
+  const profilePanel = hasSummary ? `
+    <div class="card" style="margin-bottom:14px;padding:14px 16px;background:var(--sf2);border:1px solid var(--br);border-radius:var(--r);">
+      <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Your Academic Profile</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="font-size:12px;"><span style="color:var(--tx3);">Department</span><br><strong>${profileSummary.department || '—'}</strong></div>
+        <div style="font-size:12px;"><span style="color:var(--tx3);">Academic Strength</span><br><strong>${profileSummary.academic_strength || '—'}</strong></div>
+        <div style="font-size:12px;"><span style="color:var(--tx3);">Subjects Credits</span><br><strong>${profileSummary.waec_credits != null ? profileSummary.waec_credits + ' subjects' : '—'}</strong></div>
+        <div style="font-size:12px;"><span style="color:var(--tx3);">Best Subject Group</span><br><strong>${profileSummary.best_subject_category || '—'}</strong></div>
+      </div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--br);display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+        <div style="font-size:11px;color:var(--tx3);">Aptitude: <strong style="color:var(--pl);">${aptScore}/10</strong></div>
+        <div style="font-size:11px;color:var(--tx3);">Cognitive: <strong style="color:var(--pl);">${cogScore}/10</strong></div>
+        <div style="font-size:11px;color:var(--tx3);">Psychometric: <strong style="color:var(--pl);">${psyScore}/5</strong></div>
+        <div style="font-size:11px;color:var(--tx3);">Personality: <strong style="color:var(--pl);">${perScore}/5</strong></div>
+      </div>
+    </div>` : '';
+
+  const listContainer = document.querySelector('#career-results .sc');
+  if (listContainer) {
+    listContainer.innerHTML = `
+      <div style="font-size:11px;font-weight:600;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Recommended Career Paths</div>
+      
+      <div class="ccard" onclick="viewCareerDetail('${primary.career.replace(/'/g, "\\'")}', '🥇 Primary Recommendation')">
+        <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥇 Primary Recommendation</div>
+        <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">${primary.career}</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">Your best fit based on academic profile, test scores, and interests.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <span class="badge b-pu">Confidence ${primary.confidence_percent}%</span>
+          <span class="badge b-gr">AI Model Match</span>
+        </div>
+      </div>
+      
+      <div class="ccard c2" onclick="viewCareerDetail('${alt.career.replace(/'/g, "\\'")}', '🥈 Alternative Path')">
+        <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥈 Alternative Path</div>
+        <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">${alt.career}</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">Strong secondary option based on your cognitive and personality strengths.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <span class="badge b-pu">Confidence ${alt.confidence_percent}%</span>
+          <span class="badge b-am">Secondary Match</span>
+        </div>
+      </div>
+      
+      <div class="ccard c3" onclick="viewCareerDetail('${broader.career.replace(/'/g, "\\'")}', '🥉 Broader Option')">
+        <div style="font-size:11px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;">🥉 Broader Option</div>
+        <div style="font-family:'Sora',sans-serif;font-size:19px;font-weight:700;margin-bottom:7px;">${broader.career}</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.65;margin-bottom:10px;">A flexible path that keeps multiple opportunities open.</div>
+        <div style="display:flex;flex-wrap:wrap;gap:5px;">
+          <span class="badge b-gr">Confidence ${broader.confidence_percent}%</span>
+          <span class="badge b-pk">Flexible Track</span>
+        </div>
+      </div>
+      
+      ${profilePanel}
+
+      <div class="card card-g" style="margin-top: 14px; padding: 16px;">
+        <div style="font-size:11px;color:var(--pl);margin-bottom:8px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;">Detailed Mentor Advice</div>
+        <div id="aiSummaryReport" style="font-size:13px;color:var(--tx2);line-height:1.65; font-family: 'DM Sans', sans-serif;">
+          ${gemini.summary ? marked.parse(gemini.summary) : marked.parse(`Your profile strongly aligns with **${primary.career}**. High aptitude and cognitive scores indicate excellent potential in technology-driven fields.`)}
+        </div>
+      </div>
+      <div style="height:14px;"></div>
+    `;
+  }
+}
+
+function viewCareerDetail(careerName, badgeText) {
+  const detailPage = document.getElementById('career-detail');
+  if(!detailPage) return;
+  
+  currentCareerName = careerName;
+  detailPage.querySelector('h2').textContent = careerName;
+  detailPage.querySelector('span').textContent = badgeText;
+  
+  const details = CAREER_DETAILS[careerName] || CAREER_DETAILS["Computer Science & IT"];
+  const descEl = detailPage.querySelector('p');
+  descEl.textContent = details.description;
+  
+  adaptCareerDetails(careerName);
+  updateSaveButtons(careerName);
+  
+  G('career-detail');
+}
+
+function adaptCareerDetails(careerName) {
+  const details = CAREER_DETAILS[careerName] || CAREER_DETAILS["Computer Science & IT"];
+  
+  const coursesTab = document.getElementById('tc-courses');
+  if (coursesTab) {
+    let html = `<div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Courses to study for ${careerName} in Nigeria</div>`;
+    details.courses.forEach(course => {
+      html += `
+        <div class="card" style="padding:13px;">
+          <div style="font-size:14px;font-weight:600;margin-bottom:3px;">${course.name}</div>
+          <div style="font-size:12px;color:var(--tx2);margin-bottom:7px;">${course.sub}</div>
+          <div style="display:flex;gap:5px;"><span class="badge b-gr">${course.badge}</span></div>
+        </div>`;
+    });
+    coursesTab.innerHTML = html;
+  }
+  
+  const unisTab = document.getElementById('tc-universities');
+  if (unisTab) {
+    let html = `<div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Top Nigerian universities for ${careerName}</div>`;
+    details.unis.forEach(uni => {
+      html += `
+        <div class="unicard">
+          <div class="unilo" style="font-size:11px;">${uni.logo}</div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;">${uni.name}</div>
+            <div style="font-size:11px;color:var(--tx3);">${uni.loc}</div>
+            <div style="font-size:11px;color:var(--gr);margin-top:2px;">${uni.courses}</div>
+          </div>
+          <span class="badge b-pu">${uni.badge}</span>
+        </div>`;
+    });
+    unisTab.innerHTML = html;
+  }
+
+  const jobsTab = document.getElementById('tc-jobs');
+  if (jobsTab && details.jobs) {
+    let html = `<div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Job roles in ${careerName} in Nigeria</div>`;
+    details.jobs.forEach(job => {
+      html += `
+        <div class="jobrow">
+          <div class="jdot" style="background:var(--pl);"></div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;">${job.title}</div>
+            <div style="font-size:11px;color:var(--tx3);">${job.sub}</div>
+          </div>
+          <span class="badge b-gr">${job.badge}</span>
+        </div>`;
+    });
+    jobsTab.innerHTML = html;
+  }
+
+  const peopleTab = document.getElementById('tc-people');
+  if (peopleTab && details.people) {
+    let html = `<div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Inspiring Nigerian professionals in ${careerName}</div>`;
+    details.people.forEach((person, index) => {
+      const colors = ['#4F46E5', '#EC4899', '#10B981', '#F59E0B'];
+      const bg = colors[index % colors.length];
+      const initials = person.name.substring(0, 2).toUpperCase();
+      html += `
+        <div class="procard">
+          <div class="proav" style="background:${bg};">${initials}</div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;">${person.name}</div>
+            <div style="font-size:11px;color:var(--tx2);">${person.title}</div>
+            <div style="font-size:11px;color:var(--tx3);">${person.education}</div>
+          </div>
+        </div>`;
+    });
+    peopleTab.innerHTML = html;
+  }
+ 
+  const industriesTab = document.getElementById('tc-industries');
+  if (industriesTab && details.industries) {
+    let html = `<div style="font-size:12px;color:var(--tx3);margin-bottom:10px;">Industries hiring ${careerName} in Nigeria</div>`;
+    details.industries.forEach(ind => {
+      html += `
+        <div class="indcard">
+          <div class="indico" style="background:rgba(79,70,229,.1);">${ind.icon}</div>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:600;">${ind.name}</div>
+            <div style="font-size:11px;color:var(--tx3);">${ind.details}</div>
+          </div>
+          <span class="badge b-gr">${ind.badge || 'Growing'}</span>
+        </div>`;
+    });
+    industriesTab.innerHTML = html;
+  }
+}
+
+function toggleSaveCareer(careerName) {
+  if (!APP.loggedIn) { showErr("Please sign in to save careers"); return; }
+  const idx = APP.savedCareers.indexOf(careerName);
+  if (idx > -1) {
+    APP.savedCareers.splice(idx, 1);
+    T("Removed " + careerName + " from saved careers");
+  } else {
+    APP.savedCareers.push(careerName);
+    T("Saved " + careerName + " successfully!");
+  }
+  localStorage.setItem('scp_saved_careers_' + APP.user.email, JSON.stringify(APP.savedCareers));
+  updateSaveButtons(careerName);
+  renderSavedPage();
+}
+
+function updateSaveButtons(careerName) {
+  const btn = document.getElementById('detailSaveBtn');
+  if (btn) {
+    const isSaved = APP.savedCareers.includes(careerName);
+    btn.textContent = isSaved ? 'Saved' : 'Save';
+    btn.style.background = isSaved ? 'rgba(16,185,129,0.15)' : 'rgba(79,70,229,0.1)';
+    btn.style.color = isSaved ? 'var(--gr)' : 'var(--pl)';
+    btn.style.borderColor = isSaved ? 'rgba(16,185,129,0.25)' : 'rgba(79,70,229,0.2)';
+  }
+}
+
+function saveAllRecommendations() {
+  if (!APP.assessmentResults || !APP.assessmentResults.prediction) {
+    showErr("No recommendations to save yet.");
+    return;
+  }
+  const top3 = APP.assessmentResults.prediction.top_3 || [];
+  let savedAny = false;
+  top3.forEach(item => {
+    if (!APP.savedCareers.includes(item.career)) {
+      APP.savedCareers.push(item.career);
+      savedAny = true;
+    }
+  });
+  if (savedAny) {
+    localStorage.setItem('scp_saved_careers_' + APP.user.email, JSON.stringify(APP.savedCareers));
+    T("All recommended paths saved!");
+  } else {
+    T("Recommendations are already saved.");
+  }
+  renderSavedPage();
+  G('saved');
+}
+
+function renderSavedPage() {
+  const container = document.getElementById('savedList');
+  if (!container) return;
+  
+  if (APP.savedCareers.length === 0) {
+    container.innerHTML = `
+      <div style="padding:18px;background:var(--sf2);border-radius:var(--r);border:1px dashed var(--br2);text-align:center;">
+        <div style="font-size:20px;margin-bottom:7px;">🔍</div>
+        <div style="font-size:13px;font-weight:600;margin-bottom:3px;">No Saved Careers</div>
+        <div style="font-size:12px;color:var(--tx3);margin-bottom:11px;">Complete your assessments to get recommended paths, or browse details to save.</div>
+        <button class="btn btn-p btn-sm" onclick="G('assessment-hub')">Continue Assessments</button>
+      </div>`;
+    return;
+  }
+  
+  let html = '';
+  APP.savedCareers.forEach((careerName) => {
+    const details = CAREER_DETAILS[careerName] || { description: "Explore opportunities in this field." };
+    const isPrimary = APP.assessmentResults && APP.assessmentResults.prediction && APP.assessmentResults.prediction.top_3 && APP.assessmentResults.prediction.top_3[0] && APP.assessmentResults.prediction.top_3[0].career === careerName;
+    
+    html += `
+      <div style="background:var(--sf);border:1px solid var(--br);border-radius:var(--r);padding:15px;margin-bottom:11px;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:0;left:0;bottom:0;width:3px;background:var(--grad);"></div>
+        <div style="padding-left:8px;">
+          <span class="badge b-pu" style="margin-bottom:7px;display:inline-flex;">${isPrimary ? '🏆 Primary Match' : '⭐ Saved Match'}</span>
+          <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:700;margin-bottom:6px;">${careerName}</div>
+          <div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:11px;">${details.description}</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn btn-p btn-sm" onclick="viewCareerDetail('${careerName.replace(/'/g, "\\'")}', '${isPrimary ? '🥇 Primary Recommendation' : '⭐ Saved Match'}')">View Details</button>
+            <button class="btn btn-o btn-sm" style="border-color: rgba(239,68,68,0.25); color: var(--rd);" onclick="toggleSaveCareer('${careerName.replace(/'/g, "\\'")}')">Remove</button>
+          </div>
+        </div>
+      </div>`;
+  });
+  container.innerHTML = html;
+}
+
+/* ── Test Session Runners ── */
+function startTest(category) {
+  if (!APP.assessmentSession) {
+    showErr("Assessment session has not been loaded. Please wait.");
+    return;
+  }
+  
+  const testData = APP.assessmentSession.tests.find(t => t.category === category);
+  if (!testData || !testData.questions || testData.questions.length === 0) {
+    showErr("No test questions available for this category.");
+    return;
+  }
+  
+  const pageId = category === 'aptitude' ? 'aptitude-test' :
+                 category === 'cognitive' ? 'cognitive-test' :
+                 category === 'personality' ? 'personality-test' : 'psychometric-test';
+  APP.canEnterTests = true;
+  APP.allowedTestPage = pageId;
+  TEST_RUNNER.category = category;
+  TEST_RUNNER.questions = testData.questions;
+  TEST_RUNNER.currentIndex = 0;
+   
+  renderCurrentQuestion();
+  G(pageId);
+}
+
+async function beginAssessmentSequence(forceRetake = false) {
+  const completedCount = Object.values(APP.testsDone).filter(Boolean).length;
+  const hasPastAssessment = APP.history.length > 0 || !!APP.assessmentResults;
+
+  if (forceRetake || !APP.assessmentSession || (hasPastAssessment && completedCount === 0)) {
+    APP.testsDone = {};
+    TEST_RUNNER.answers = {};
+    APP.assessmentResults = null;
+    APP.recommendationPending = false;
+    APP.isRetaking = true;
+    await loadAssessmentSession();
+  }
+
+  if (completedCount === 4 && !forceRetake) {
+    if (APP.assessmentResults) {
+      G('career-results');
+    } else {
+      G('processing');
+    }
+    return;
+  }
+ 
+  let nextCategory = 'aptitude';
+  if (!APP.testsDone.current_0) nextCategory = 'aptitude';
+  else if (!APP.testsDone.current_1) nextCategory = 'cognitive';
+  else if (!APP.testsDone.current_2) nextCategory = 'personality';
+  else if (!APP.testsDone.current_3) nextCategory = 'psychometric';
+ 
+  startTest(nextCategory);
+}
+
+function navBack() {
+ if (APP.navHistory.length === 0) {
+   const active = document.querySelector('.page.active');
+   if (active && active.id === 'login') return G('splash');
+   if (active && active.id === 'signup') return G('onboard');
+   if (active && active.id === 'profile-basic') return G('signup');
+   return G('my-profile');
+ }
+ const prev = APP.navHistory.pop();
+ APP.navigatingBack = true;
+ G(prev);
+}
+
+function renderCurrentQuestion() {
+  const category = TEST_RUNNER.category;
+  const q = TEST_RUNNER.questions[TEST_RUNNER.currentIndex];
+  if(!q) return;
+
+  const pageId = category === 'aptitude' ? 'aptitude-test' :
+                 category === 'cognitive' ? 'cognitive-test' :
+                 category === 'personality' ? 'personality-test' : 'psychometric-test';
+  const pageEl = document.getElementById(pageId);
+  if(!pageEl) return;
+
+  const total = TEST_RUNNER.questions.length;
+  const currNum = TEST_RUNNER.currentIndex + 1;
+  const pct = Math.round((currNum / total) * 100);
+   
+  const progressText = pageEl.querySelector('.ptrack').previousElementSibling.querySelector('span');
+  progressText.textContent = `Question ${currNum} of ${total}`;
+  progressText.nextElementSibling.textContent = `${pct}%`;
+  pageEl.querySelector('.pfill').style.width = pct + '%';
+
+  const container = pageEl.querySelector('.sc');
+  const prevAns = TEST_RUNNER.answers[q.id];
+
+  let optionsHtml = '';
+  if (category === 'aptitude' || category === 'cognitive') {
+    q.options.forEach((opt, idx) => {
+      const isSel = prevAns === opt;
+      const letter = String.fromCharCode(65 + idx);
+      optionsHtml += `
+        <div class="aopt ${isSel ? 'sel' : ''}" onclick="selectQuestionOption('${q.id}', '${opt.replace(/'/g, "\\'")}')">
+          <div class="oltr">${letter}</div>
+          ${opt}
+        </div>`;
+    });
+  } else if (category === 'personality') {
+    optionsHtml += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:20px;">`;
+    const icons = ["❌", "🤏🏼", "⏳", "♾"];
+    q.options.forEach((opt, idx) => {
+      const isSel = prevAns === opt;
+      const icon = icons[idx % icons.length];
+      optionsHtml += `
+        <div class="aopt ${isSel ? 'sel' : ''}" style="flex-direction:column;text-align:center;padding:18px 10px;margin-bottom:0;" onclick="selectQuestionOption('${q.id}', '${opt.replace(/'/g, "\\'")}')">
+          <div style="font-size:22px;margin-bottom:7px;">${icon}</div>
+          <div style="font-size:12px;">${opt}</div>
+        </div>`;
+    });
+    optionsHtml += `</div>`;
+  } else if (category === 'psychometric') {
+    optionsHtml += `
+      <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--tx3);margin-bottom:9px;">
+        <span>Strongly disagree</span><span>Strongly agree</span>
+      </div>
+      <div class="scaleopts">`;
+    q.options.forEach((opt, idx) => {
+      const isSel = prevAns === opt;
+      optionsHtml += `
+        <div class="sopt ${isSel ? 'sel' : ''}" onclick="selectQuestionOption('${q.id}', '${opt.replace(/'/g, "\\'")}')">
+          <span class="snum">${idx + 1}</span>
+          <span style="font-size:9px;color:var(--tx3);text-align:center;margin-top:4px;line-height:1.2;">${opt}</span>
+        </div>`;
+    });
+    optionsHtml += `</div>`;
+  }
+
+  const isFirst = TEST_RUNNER.currentIndex === 0;
+  const isLast = TEST_RUNNER.currentIndex === total - 1;
+  const nextBtnText = isLast ? 'Finish Section' : 'Next →';
+
+  container.innerHTML = `
+    <p style="font-family:'Sora',sans-serif;font-size:17px;font-weight:600;line-height:1.4;margin-bottom:22px;">${q.prompt}</p>
+    ${optionsHtml}
+    <div style="margin-top:22px;display:flex;gap:10px;">
+      <button class="btn btn-o btn-sm" ${isFirst ? 'disabled style="opacity: 0.3; cursor: not-allowed;"' : ''} onclick="prevQuestion()">← Previous</button>
+      <button class="btn btn-p btn-sm" style="flex:1;" onclick="nextQuestion()">${nextBtnText}</button>
+    </div>
+    <div style="font-size:10px;color:var(--tx3);text-align:center;margin-top:14px;font-style:italic;">Source: ${q.source || 'International Standard Bank'}</div>
+  `;
+}
+
+function selectQuestionOption(qId, optionVal) {
+  TEST_RUNNER.answers[qId] = optionVal;
+  renderCurrentQuestion();
+}
+
+function prevQuestion() {
+  if (TEST_RUNNER.currentIndex > 0) {
+    TEST_RUNNER.currentIndex--;
+    renderCurrentQuestion();
+  }
+}
+
+function nextQuestion() {
+  const total = TEST_RUNNER.questions.length;
+  const q = TEST_RUNNER.questions[TEST_RUNNER.currentIndex];
+  if (!TEST_RUNNER.answers[q.id]) {
+    showErr('Please select an option to continue.');
+    return;
+  }
+  
+  if (TEST_RUNNER.currentIndex < total - 1) {
+    TEST_RUNNER.currentIndex++;
+    renderCurrentQuestion();
+  } else {
+    finishSection();
+  }
+}
+
+function finishSection() {
+  const category = TEST_RUNNER.category;
+  let idx = 0;
+  if (category === 'aptitude') idx = 0;
+  if (category === 'cognitive') idx = 1;
+  if (category === 'personality') idx = 2;
+  if (category === 'psychometric') idx = 3;
+  
+  APP.testsDone['current_' + idx] = true;
+  
+  T(TESTS[idx].title + ' completed!');
+  G('assessment-hub');
+}
+
+/* ── Navigation with validation ── */
+const SCREENS = ['splash','onboard','login','signup','profile-basic','profile-upload','profile-interests','assessment-hub','aptitude-test','cognitive-test','personality-test','psychometric-test','processing','career-results','career-detail','saved','history','my-profile'];
+
+function G(id){
+  if(!validateTransition(id)) return;
+  const current = document.querySelector('.page.active');
+  if(current && current.id !== id && !APP.navigatingBack) {
+    APP.navHistory.push(current.id);
+  }
+  APP.navigatingBack = false;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  const t=document.getElementById(id);
+  if(t){ t.classList.add('active'); document.getElementById('PS').scrollTop=0; updateSL(id); }
+  if(!['aptitude-test','cognitive-test','personality-test','psychometric-test'].includes(id)){
+    APP.canEnterTests = false;
+    APP.allowedTestPage = '';
+  }
+   
+  if(id==='assessment-hub'){ 
+    loadAssessmentSession().then(() => renderAssessHub()).catch(() => renderAssessHub());
+  }
+  if(id==='profile-upload'){ renderUploadSlots(); }
+  if(id==='view-results'){ renderViewResults(); }
+  if(id==='my-profile'){ renderProfilePage(); }
+  if(id==='processing'){ runRecommendationFlow(); }
+  if(id==='career-results'){ renderResultsPage(); }
+  if(id==='saved'){ renderSavedPage(); }
+  if(id==='history'){ renderHistory(); }
+}
+
+function validateTransition(dest){
+  const allowedPreLogin = ['splash','onboard','login','signup'];
+  if (!APP.loggedIn && !allowedPreLogin.includes(dest)) {
+    showErr('Please sign in first');
+    G('login');
+    return false;
+  }
+
+  if(['assessment-hub','aptitude-test','cognitive-test','personality-test','psychometric-test','processing','career-results','career-detail','my-profile','history'].includes(dest)){
+    if(!APP.loggedIn){ showErr('Please sign in first'); G('login'); return false; }
+  }
+   
+  if (['assessment-hub','aptitude-test','cognitive-test','personality-test','psychometric-test','processing'].includes(dest)) {
+    const targetLevel = getTargetUploadLevel();
+    if (!APP.uploaded.includes(targetLevel)) {
+      showErr('Please enter and save your '+targetLevel+' results first.');
+      G('profile-upload');
+      return false;
+    }
+  }
+
+  if (['aptitude-test','cognitive-test','personality-test','psychometric-test'].includes(dest)) {
+    if (!APP.canEnterTests || APP.allowedTestPage !== dest) {
+      showErr('Please start your tests from the assessment hub.');
+      return false;
+    }
+  }
+   
+  if (dest === 'processing') {
+    const testsComplete = Object.values(APP.testsDone).filter(Boolean).length === 4;
+    if (!testsComplete) {
+      showErr('Complete all tests before processing your recommendations.');
+      G('assessment-hub');
+      return false;
+    }
+  }
+   
+  if (dest === 'career-results') {
+    if (!APP.assessmentResults) {
+      if (APP.history.length > 0 && APP.history[0].payload) {
+        APP.assessmentResults = APP.history[0].payload;
+      } else {
+        showErr('Process your test results first to view career recommendations.');
+        G('assessment-hub');
+        return false;
+      }
+    }
+  }
+   
+  if (dest === 'career-detail') {
+    if (!currentCareerName) {
+      showErr('Select a career recommendation first.');
+      return false;
+    }
+  }
+   
+  if (['aptitude-test','cognitive-test','personality-test','psychometric-test'].includes(dest)) {
+    const { can, reason } = canTakeTest();
+    if (!can) {
+      showErr('Tests locked: ' + reason);
+      return false;
+    }
+  }
+  
+  if (dest === 'profile-upload' || dest === 'profile-interests') {
+    const cur = document.querySelector('.page.active');
+    if (cur && cur.id === 'profile-basic') {
+      const sName = cur.querySelector('input[type="text"]');
+      if(!sName || !sName.value.trim()){ showErr('Please enter your school name'); sName && (sName.style.borderColor='var(--rd)'); return false; }
+      const selects = cur.querySelectorAll('select');
+      let ok = true;
+      selects.forEach(s => {
+        if(!s.value){ s.style.borderColor='var(--rd)'; ok = false; }
+        else s.style.borderColor='';
+      });
+      if(!ok){ showErr('Please complete all school details'); return false; }
+       
+      syncProfileData();
+    }
+  }
+  
+  return true;
+}
+
+async function loadHistory() {
+  const studentId = (APP.user.email || 'guest').trim();
+  try {
+    const response = await fetch(API_BASE_URL + '/history/' + encodeURIComponent(studentId));
+    if (response.ok) {
+      APP.history = await response.json();
+    }
+  } catch (e) {
+    console.error("Error loading history:", e);
+  }
+}
+
+function renderHistory() {
+  const container = document.getElementById('historyList');
+  if (!container) return;
+
+  const historyData = APP.history || [];
+  if (historyData.length === 0) {
+    container.innerHTML = `
+      <div style="text-align:center;padding:40px 20px;color:var(--tx3);">
+        <div style="font-size:36px;margin-bottom:10px;">📋</div>
+        <p style="font-size:13px;">You haven't completed any assessments yet.</p>
+      </div>`;
+    return;
+  }
+
+  let html = '';
+  const cls = APP.school.classLevel || 'SSS 1';
+  const g = getGroup(cls);
+  const { can, reason } = canTakeTest();
+  if (!can && reason.includes('Upload')) {
+    const need = UNLOCK_RESULT[g];
+    html += `
+      <div style="background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.2);border-radius:var(--r);padding:13px 14px;margin-bottom:18px;display:flex;align-items:flex-start;gap:9px;">
+        <div style="font-size:18px;">🔄</div>
+        <div style="flex:1;">
+          <div style="font-size:13px;font-weight:600;color:var(--yw);margin-bottom:2px;">Class Level Update Required</div>
+          <div style="font-size:12px;color:var(--tx2);line-height:1.5;">${reason}</div>
+          <button class="btn btn-p btn-sm" style="margin-top:9px;" onclick="G('profile-upload')">Upload ${need} Result</button>
+        </div>
+      </div>`;
+  }
+
+  historyData.forEach((item, index) => {
+    const payload = item.payload || {};
+    const prediction = payload.prediction || {};
+    const career = prediction.predicted_career || 'Unknown';
+    const dateStr = new Date(item.created_at || Date.now()).toLocaleDateString('en-NG', { month: 'short', year: 'numeric', day: 'numeric' });
+    const isFirst = index === 0;
+    
+    html += `
+      <div class="hitem">
+        <div class="hline"><div class="hdot" style="${isFirst ? '' : 'background:var(--tx3);'}"></div>${index < historyData.length - 1 ? '<div class="hbar"></div>' : ''}</div>
+        <div style="flex:1;padding-bottom:8px;">
+          <div style="font-size:11px;color:var(--tx3);margin-bottom:4px;">${dateStr}</div>
+          <div class="card" style="margin-bottom:0;padding:13px;">
+            <div style="font-size:13px;font-weight:600;margin-bottom:5px;">${index === 0 ? 'Latest Assessment' : 'Previous Assessment'}</div>
+            <div style="font-size:12px;color:var(--tx2);margin-bottom:9px;">Career Match: <strong>${career}</strong></div>
+            <button class="btn btn-p btn-sm" onclick="showHistoryDetail(${index})">View Details</button>
+          </div>
+        </div>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+}
+
+function showHistoryDetail(index) {
+  const item = APP.history[index];
+  if (!item) return;
+  APP.assessmentResults = item.payload;
+  renderResultsPage();
+  G('career-results');
+}
+
+/* ── Profile basic synchronization ── */
+function syncProfileData() {
+  const sName = document.querySelector('#profile-basic input[placeholder="e.g. King\'s College Lagos"]');
+  const selects = document.querySelectorAll('#profile-basic select');
+  
+  if(sName) APP.school.name = sName.value;
+  if(selects[0]) APP.school.type = selects[0].value;
+  if(selects[1]) APP.school.state = selects[1].value;
+  if(selects[2]) APP.school.classLevel = selects[2].value;
+  if(selects[3]) APP.school.dept = selects[3].value;
+  if(selects[4]) APP.school.lang = selects[4].value;
+  
+  syncProfileWithBackend();
+}
+
+/* ── Upload slots (single-file flow) ── */
+/* ── Upload slots (single-file flow) ── */
+function getTargetUploadLevel() {
+  const current = APP.school.classLevel || 'SSS 1';
+  if (current === 'SSS 2') return 'SSS 1';
+  if (current === 'SSS 3') return 'SSS 2';
+  return 'SSS 1';
+}
+
+function renderUploadSlots(){
+  const el = document.getElementById('uploadSlots');
+  if(!el) return;
+
+  const currentLevel = APP.school.classLevel || 'SSS 1';
+  const targetLevel = getTargetUploadLevel();
+  const dept = APP.school.dept || 'Science';
+  const hasGrades = Object.keys(APP.manualGrades || {}).length > 0;
+  const isSaved = APP.uploaded.includes(targetLevel);
+
+  let html = `
+    <div class="card-g card" style="margin-bottom:12px;padding:12px 16px;">
+      <div style="font-size:12px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;">Academic Profile Details</div>
+      <div style="margin-top:6px;display:flex;gap:12px;flex-wrap:wrap;">
+        <span class="badge b-pu">Registered Class: ${currentLevel}</span>
+        <span class="badge b-am">Manual Grades for: ${targetLevel}</span>
+        <span class="badge b-gr">Department: ${dept}</span>
+      </div>
+    </div>
+  `;
+
+  html += `
+    <div style="font-size:13px;color:var(--tx2);margin-bottom:16px;line-height:1.6;">Enter your year-end grades manually for the required subjects. Save your inputs to continue to the assessment hub.</div>
+    <div id="manualGradeForm"></div>
+  `;
+
+  if(isSaved){
+    html += `
+      <div style="margin-top:18px;padding:16px;border:1px solid rgba(16,185,129,.2);border-radius:var(--rs);background:rgba(16,185,129,.08);text-align:center;">
+        <div style="font-size:13px;font-weight:600;color:var(--gr);margin-bottom:10px;">Ready to continue</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;">Your saved results are ready. Continue to the assessment hub to start your tests.</div>
+        <button class="btn btn-p btn-sm" onclick="G('assessment-hub')">Continue to Assessment Hub</button>
+      </div>
+    `;
+  } else if (hasGrades) {
+    html += `
+      <div style="margin-top:18px;padding:16px;border:1px solid rgba(245,158,11,.2);border-radius:var(--rs);background:rgba(245,158,11,.08);text-align:center;">
+        <div style="font-size:13px;font-weight:600;color:var(--yw);margin-bottom:10px;">Save your grades first</div>
+        <div style="font-size:12px;color:var(--tx2);line-height:1.6;">Your manual grades are entered. Tap Save Manual Results to lock them in before continuing.</div>
+      </div>
+    `;
+  }
+
+  html += `
+    <div style="font-size:12px;color:var(--tx3);margin-top:14px;line-height:1.6;">This app now accepts only manual grade entry. Files and Excel uploads are removed for a simpler, mobile-friendly flow.</div>
+  `;
+
+  el.innerHTML = html;
+  renderManualGradeForm();
+}
+
+function renderManualGradeForm() {  const container = document.getElementById('manualGradeForm');
+  if(!container) return;
+  
+  const dept = APP.school.dept || 'Science';
+  const deptSubjects = DEPT_SUBJECT_MAP[dept] || ['Mathematics','English','Civic Education'];
+  
+  const subjects = [];
+  ['Mathematics','English','Civic Education'].forEach(c=>{ if(!subjects.includes(c)) subjects.push(c); });
+  deptSubjects.forEach(s=>{ if(!subjects.includes(s)) subjects.push(s); });
+  
+  const targetLevel = getTargetUploadLevel();
+  let html = `<div style="font-size:13px;color:var(--tx2);margin-bottom:12px;line-height:1.5;">Subjects list for your department: <strong>${dept}</strong>. Select grades for <strong>${targetLevel}</strong>:</div>`;
+  
+  html += `<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(95px,1fr));gap:8px;margin-bottom:16px;">`;
+  
+  subjects.forEach(sub => {
+    const key = sub.toLowerCase().replace(/ /g,'_');
+    const grade = (APP.manualGrades[key] !== undefined && APP.manualGrades[key] !== '') ? APP.manualGrades[key] : (APP.fileUploadedGrades[key] || '');
+    
+    html += `
+    <div class="card" style="padding:10px;margin-bottom:0;display:flex;flex-direction:column;justify-content:space-between;border:1px solid var(--br);background:var(--sf2);border-radius:var(--rs);">
+      <label style="font-size:11px;font-weight:600;color:var(--tx2);display:block;margin-bottom:6px;min-height:28px;line-height:1.2;overflow:hidden;text-overflow:ellipsis;" title="${sub}">${sub}</label>
+      <select class="inp" style="padding:5px 8px;font-size:12px;height:34px;border-radius:var(--rx);" onchange="updateManualGrade('${sub}', this.value)">
+        <option value="">Select</option>
+        <option value="A" ${grade==='A'?'selected':''}>A</option>
+        <option value="B" ${grade==='B'?'selected':''}>B</option>
+        <option value="C" ${grade==='C'?'selected':''}>C</option>
+        <option value="D" ${grade==='D'?'selected':''}>D</option>
+        <option value="E" ${grade==='E'?'selected':''}>E</option>
+        <option value="F" ${grade==='F'?'selected':''}>F</option>
+      </select>
+    </div>`;
+  });
+  
+  html += `</div>`;
+  
+  html += `
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-p btn-sm" onclick="submitManualGrades()">Save Manual Results</button>
+      <button class="btn btn-ghost" onclick="clearManualGrades()">Clear All</button>
+    </div>
+  `;
+  
+  container.innerHTML = html;
+}
+
+function updateManualGrade(subject, grade) {
+  const key = subject.toLowerCase().replace(/ /g, '_');
+  if(grade === '') {
+    delete APP.manualGrades[key];
+  } else {
+    APP.manualGrades[key] = grade;
+  }
+  APP.subjectGrades = Object.assign({}, APP.fileUploadedGrades || {}, APP.manualGrades || {});
+  const pv = document.getElementById('uploadPreview'); if(pv) renderUploadPreview();
+}
+
+function clearManualGrades() {
+  APP.manualGrades = {};
+  APP.subjectGrades = Object.assign({}, APP.fileUploadedGrades || {}, APP.manualGrades || {});
+  renderManualGradeForm();
+  T('Manual grades cleared');
+}
+
+async function submitManualGrades() {
+  const studentId = APP.user.email || 'guest';
+  if(studentId==='guest'){ showErr('Please sign in to save results'); G('login'); return; }
+  const targetLevel = getTargetUploadLevel();
+  try {
+    const payload = { student_id: studentId, level: targetLevel, subject_grades: APP.subjectGrades, manual_grades: APP.manualGrades || {}, file_grades: APP.fileUploadedGrades || {} };
+    const res = await fetch(API_BASE_URL + '/save_results', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+    const j = await res.json();
+    if(j && (j.status==='success' || j.success)){
+      T('Grades saved successfully');
+      if(!APP.uploaded.includes(targetLevel)) APP.uploaded.push(targetLevel);
+      await fetch(API_BASE_URL + '/update_profile', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ student_id: studentId, uploaded_results: JSON.stringify(payload) }) });
+      renderUploadSlots();
+    } else {
+      T('Failed to save grades');
+    }
+  } catch(e) {
+    console.error(e); T('Failed to save grades');
+  }
+}
+
+function mockUpload(lvl){
+  if(!APP.uploaded.includes(lvl)) APP.uploaded.push(lvl);
+  T(lvl+' result uploaded ✓');
+  syncProfileWithBackend();
+  renderUploadSlots();
+  renderAssessHub();
+}
+
+function renderViewResults(){
+  const el = document.getElementById('viewResultsContent');
+  if(!el) return;
+  
+  const dept = APP.school.dept || 'Science';
+  const subjects = Object.keys(APP.subjectGrades || {});
+  const completedLevels = APP.uploaded || [];
+  
+  let html = '';
+
+  html += `
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;">
+      <div style="background:var(--sf2);border-radius:var(--rs);padding:10px 6px;text-align:center;border:1px solid var(--br);">
+        <div style="font-size:16px;font-weight:700;font-family:'Sora',sans-serif;" class="gt">${subjects.length}</div>
+        <div style="font-size:9px;color:var(--tx3);margin-top:2px;">Subjects Entered</div>
+      </div>
+      <div style="background:var(--sf2);border-radius:var(--rs);padding:10px 6px;text-align:center;border:1px solid var(--br);">
+        <div style="font-size:12px;font-weight:700;font-family:'Sora',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;" class="gt">${dept}</div>
+        <div style="font-size:9px;color:var(--tx3);margin-top:2px;">Department</div>
+      </div>
+      <div style="background:var(--sf2);border-radius:var(--rs);padding:10px 6px;text-align:center;border:1px solid var(--br);">
+        <div style="font-size:16px;font-weight:700;font-family:'Sora',sans-serif;" class="gt">${completedLevels.length}</div>
+        <div style="font-size:9px;color:var(--tx3);margin-top:2px;">Levels Saved</div>
+      </div>
+    </div>
+  `;
+
+  html += `
+    <div class="card" style="margin-bottom:12px;padding:12px 14px;">
+      <div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--tx2);">Saved Levels Status</div>
+  `;
+  if(!completedLevels || completedLevels.length===0){
+    html += `    <div style="font-size:12px;color:var(--tx3);">No saved results yet. Go to Upload Results page.</div>
+`;  } else {
+    html += '<div style="display:flex;gap:6px;flex-wrap:wrap;">';
+    completedLevels.forEach(l => { 
+      html += `<span class="badge b-pu" style="font-size:10px;">${l} Total Result ✓</span>`; 
+    });
+    html += '</div>';
+  }
+  html += `</div>`;
+
+  html += `
+    <div class="card" style="padding:14px;">
+      <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:var(--tx2);">Grades Analysis</div>
+  `;
+  
+  if(subjects.length===0){
+    html += `<div style="font-size:12px;color:var(--tx3);text-align:center;padding:16px 0;">No subject grades added yet.</div>`;
+  } else {
+    html += '<div style="display:flex;flex-direction:column;gap:8px;">';
+    const sortedSubjects = [...subjects].sort();
+    sortedSubjects.forEach(s => {
+      const display = s.replace(/_/g,' ').replace(/\b\w/g, l => l.toUpperCase());
+      const isManual = (APP.manualGrades && APP.manualGrades[s] !== undefined);
+      const isFile = (APP.fileUploadedGrades && APP.fileUploadedGrades[s] !== undefined);
+      const srcText = (isManual && isFile) ? 'Merged' : isManual ? 'Manual' : isFile ? 'Saved' : 'Default';
+      const srcClass = isManual ? 'b-pu' : isFile ? 'b-gr' : 'b-am';
+      
+      const grade = APP.subjectGrades[s] || 'C';
+      
+      let gradeClass = 'b-pu';
+      if (grade === 'A' || grade === 'B') gradeClass = 'b-gr';
+      if (grade === 'C' || grade === 'D') gradeClass = 'b-am';
+      if (grade === 'E' || grade === 'F') gradeClass = 'b-rd';
+      
+      html += `
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--sf2);border-radius:var(--rs);border:1px solid var(--br);">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0;">
+            <div style="font-size:16px;">📚</div>
+            <div style="min-width:0;flex:1;">
+              <div style="font-size:13px;font-weight:600;color:var(--tx);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">${display}</div>
+              <div style="font-size:10px;color:var(--tx3);margin-top:1px;">Source: <span class="badge ${srcClass}" style="padding:1px 6px;font-size:9px;font-weight:500;border-radius:4px;display:inline-block;line-height:1.2;">${srcText}</span></div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div class="badge ${gradeClass}" style="width:30px;height:30px;border-radius:8px;font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0;">${grade}</div>
+          </div>
+        </div>
+      `;
+    });
+    html += '</div>';
+  }
+  html += `</div>`;
+
+  const missingCompulsory = [];
+  ['mathematics', 'english', 'civic_education'].forEach(c => {
+    if (!APP.subjectGrades || !APP.subjectGrades[c]) {
+      missingCompulsory.push(c.replace(/_/g,' ').replace(/\b\w/g, l => l.toUpperCase()));
+    }
+  });
+
+  if (missingCompulsory.length > 0) {
+    html += `
+      <div class="card-g card" style="margin-top:12px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.04);padding:12px 14px;">
+        <div style="font-size:12px;font-weight:600;color:var(--yw);margin-bottom:4px;">⚠️ Incomplete Profile Details</div>
+        <div style="font-size:11px;color:var(--tx2);line-height:1.5;">Your profile is missing grades for: <strong>${missingCompulsory.join(', ')}</strong>. Default grades ('C' or 'B') will be used in career predictions. We recommend adding these manually.</div>
+      </div>
+    `;
+  }
+
+  el.innerHTML = html;
+}
+
+/* ── Assessment hub ── */
+function renderAssessHub(){
+  const userName = APP.user.name || 'Student';
+  const userInitial = (userName[0] || 'S').toUpperCase();
+  const nameEl = document.getElementById('assessHubUserName');
+  const avatarEl = document.getElementById('assessHubAvatar');
+  if (nameEl) nameEl.textContent = userName;
+  if (avatarEl) avatarEl.textContent = userInitial;
+  const {can,reason}=canTakeTest();
+  const lockEl=document.getElementById('testLockInfo');
+  if(lockEl){
+    lockEl.innerHTML=can
+      ? `<div style="background:rgba(16,185,129,.07);border:1px solid rgba(16,185,129,.2);border-radius:var(--rs);padding:9px 13px;font-size:12px;color:var(--gr);">&#10003; Tests available for <strong>${APP.school.classLevel||'your class'}</strong></div>`
+      : `<div style="background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.2);border-radius:var(--rs);padding:10px 13px;display:flex;gap:9px;align-items:flex-start;"><div style="font-size:16px;flex-shrink:0;">&#128274;</div><div><div style="font-size:12px;font-weight:600;color:var(--rd);margin-bottom:2px;">Tests Locked</div><div style="font-size:11px;color:var(--tx2);line-height:1.5;">${reason}</div>${reason.includes('Upload')?`<button onclick="G('profile-upload')" style="margin-top:7px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);border-radius:6px;padding:5px 10px;font-size:11px;font-weight:600;color:var(--rd);cursor:pointer;">Upload Result &#8594;</button>`:''}</div></div>`;
+  }
+  const cardsEl=document.getElementById('assessCards');
+  if(!cardsEl) return;
+  const hasAssessmentHistory = !!APP.assessmentResults || APP.history.length > 0;
+  const testsDoneCount = Object.values(APP.testsDone).filter(Boolean).length;
+  const displayDone = hasAssessmentHistory && testsDoneCount === 0 && !APP.isRetaking ? 4 : testsDoneCount;
+  const canRetake = hasAssessmentHistory && testsDoneCount === 0 && !APP.isRetaking;
+  let html='';
+  TESTS.forEach((t,i)=>{
+    const isDone = !!(APP.testsDone['current_'+i]) || (hasAssessmentHistory && !APP.isRetaking);
+    const isNext = !isDone && TESTS.slice(0,i).every((_,j)=>APP.testsDone['current_'+j]);
+    const cardHint = isDone ? 'Already completed' : `Use the ${hasAssessmentHistory && !APP.isRetaking ? 'Retake Tests' : 'Start Tests'} button below to begin your assessment.`;
+    html+=`<div class="ascard ${isDone?'done':isNext&&can?'nxt':!can&&!isDone?'locked':''}" onclick="T('${cardHint.replace(/'/g, "\\'")}')">
+      <div class="asnum">${isDone?'&#10003;':t.icon}</div>
+      <div style="flex:1;"><div style="font-size:14px;font-weight:600;margin-bottom:2px;">${t.title}</div><div style="font-size:11px;color:var(--tx3);">${t.sub}</div></div>
+      ${isDone?`<span class="badge b-gr">Done</span>`:isNext&&can?`<span class="badge b-pu">Next</span>`:!can&&!isDone?`<span class="badge b-rd">Locked</span>`:`<span style="color:var(--tx3);font-size:18px;">&#8250;</span>`}
+    </div>`;
+  });
+  cardsEl.innerHTML=html;
+  const pct=Math.round(displayDone/4*100);
+  const pb=document.getElementById('progBar'), pl=document.getElementById('progLabel');
+  if(pb) pb.style.width=pct+'%';
+  if(pl) pl.textContent=`${displayDone} / 4 Done`;
+
+  const actionEl = document.getElementById('assessmentAction');
+  if(actionEl){
+    if(displayDone === 4){
+      if(APP.assessmentResults){
+        actionEl.innerHTML = `<div style="margin:18px 0 0;padding:16px;border:1px solid rgba(16,185,129,.2);border-radius:var(--rs);background:rgba(16,185,129,.08);text-align:center;"><div style="font-size:13px;font-weight:600;color:var(--gr);margin-bottom:10px;">All tests are complete</div><div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;">Your career recommendations are ready. Continue to view your AI-guided results.</div><button class="btn btn-p btn-sm" onclick="G('career-results')">See Career Recommendations</button></div>`;
+      } else if (canRetake) {
+        actionEl.innerHTML = `<div style="margin:18px 0 0;padding:16px;border:1px solid rgba(79,70,229,.15);border-radius:var(--rs);background:rgba(79,70,229,.06);text-align:center;"><div style="font-size:13px;font-weight:600;color:var(--pl);margin-bottom:10px;">Retake Tests</div><div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;">You have previous assessment results. Start a new assessment run to refresh your career recommendations.</div><button class="btn btn-p btn-sm" onclick="beginAssessmentSequence(true)">Retake Tests</button></div>`;
+      } else {
+        actionEl.innerHTML = `<div style="margin:18px 0 0;padding:16px;border:1px solid rgba(79,70,229,.15);border-radius:var(--rs);background:rgba(79,70,229,.06);text-align:center;"><div style="font-size:13px;font-weight:600;color:var(--pl);margin-bottom:10px;">All tests have been completed</div><div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;">Click below to process your answers and unlock career recommendations.</div><button class="btn btn-p btn-sm" onclick="G('processing')">See Career Recommendations</button></div>`;
+      }
+    } else {
+      const startLabel = testsDoneCount === 0 ? (hasAssessmentHistory ? 'Retake Tests' : 'Start Tests') : 'Continue Tests';
+      const statusText = testsDoneCount === 0 ? (hasAssessmentHistory ? 'Begin a new assessment run by retaking your tests.' : 'Begin your assessment with the first test.') : `You have completed ${testsDoneCount} of 4 tests. Resume your assessment.`;
+      actionEl.innerHTML = `<div style="margin:18px 0 0;padding:16px;border:1px solid rgba(79,70,229,.15);border-radius:var(--rs);background:rgba(79,70,229,.06);text-align:center;"><div style="font-size:13px;font-weight:600;color:var(--pl);margin-bottom:10px;">${startLabel}</div><div style="font-size:12px;color:var(--tx2);line-height:1.6;margin-bottom:14px;">${statusText}</div><button class="btn btn-p btn-sm" onclick="beginAssessmentSequence()">${startLabel}</button></div>`;
+    }
+  }
+}
+
+/* ── Profile page render ── */
+function renderProfilePage(){
+  const n=document.getElementById('profileName');
+  const s=document.getElementById('profileSub');
+  const sc=document.getElementById('profileSchool');
+  const av=document.getElementById('profileAvatar');
+  const tests=document.getElementById('profileTests');
+  const careers=document.getElementById('profileCareerCount');
+  const saved=document.getElementById('profileSavedCount');
+  if(n) n.textContent=APP.user.name||'Your Name';
+  if(s) s.textContent=`${APP.school.classLevel||'Class'} · ${APP.school.dept||'Dept'} · ${APP.school.state||'State'}`;
+  if(sc) sc.textContent=APP.school.name||'Your School';
+  if(av) av.textContent=(APP.user.name||'?')[0].toUpperCase();
+  const rawTestCount = Object.values(APP.testsDone).filter(Boolean).length;
+  const hasAssessmentHistory = !!APP.assessmentResults || APP.history.length > 0;
+  const testCount = rawTestCount || (hasAssessmentHistory && !APP.isRetaking ? 4 : 0);
+  const recommendationCount = APP.assessmentResults && APP.assessmentResults.prediction && Array.isArray(APP.assessmentResults.prediction.top_3) ? APP.assessmentResults.prediction.top_3.length : 0;
+  if(tests) tests.textContent = testCount;
+  if(careers) careers.textContent = recommendationCount;
+  if(saved) saved.textContent = APP.savedCareers.length;
+
+  const actionRow = document.getElementById('profileAssessmentActionRow');
+  const actionTitle = document.getElementById('profileAssessmentActionTitle');
+  const actionDesc = document.getElementById('profileAssessmentActionDesc');
+  if(actionRow && actionTitle && actionDesc){
+    actionRow.style.display = 'flex';
+    if(testCount === 0){
+      actionTitle.textContent = 'Take Tests';
+      actionDesc.textContent = APP.uploaded.length === 0 ? 'Upload your results then take your first set of tests.' : 'Go to the assessment hub to begin your tests.';
+    } else {
+      actionTitle.textContent = 'Retake Tests';
+      actionDesc.textContent = 'Return to the assessment hub to refresh your results or retake the assessments.';
+    }
+  }
+
+  const summaryTests = document.getElementById('profileSummaryTests');
+  const summaryStatus = document.getElementById('profileSummaryStatus');
+  const summaryDetail = document.getElementById('profileSummaryDetail');
+  const summaryTestDetail = document.getElementById('profileTestDetail');
+  if(summaryTests && summaryStatus && summaryDetail){
+    summaryTests.textContent = `${testCount} / 4 tests completed`;
+    if(testCount === 0){
+      summaryStatus.textContent = 'No tests taken yet';
+      summaryDetail.textContent = 'Upload your results and start your tests to receive career recommendations.';
+    } else if(testCount < 4){
+      summaryStatus.textContent = 'Assessment in progress';
+      summaryDetail.textContent = 'Continue your remaining tests from the assessment hub to complete your profile.';
+    } else {
+      summaryStatus.textContent = APP.assessmentResults ? 'Recommendations ready' : 'Tests completed';
+      summaryDetail.textContent = APP.assessmentResults ? 'Career recommendations are ready to view in the Results section.' : 'All tests are complete. Process your answers to unlock career recommendations.';
+    }
+  }
+
+  if(summaryTestDetail){
+    let testScores = null;
+    if (APP.assessmentResults && APP.assessmentResults.test_scores) {
+      testScores = APP.assessmentResults.test_scores;
+    }
+    const testStatusItems = TESTS.map((test, index) => {
+      const done = !!APP.testsDone['current_' + index] || (hasAssessmentHistory && testCount === 4 && !APP.isRetaking);
+      let scoreHtml = '';
+      if (done && testScores) {
+        if (index === 0 && testScores.aptitude_score_10 != null) scoreHtml = `<span style="font-size:11px;font-weight:600;color:var(--pl);margin-left:auto;">${testScores.aptitude_score_10.toFixed(1)}/10</span>`;
+        else if (index === 1 && testScores.cognitive_score_10 != null) scoreHtml = `<span style="font-size:11px;font-weight:600;color:var(--pl);margin-left:auto;">${testScores.cognitive_score_10.toFixed(1)}/10</span>`;
+        else if (index === 2 && testScores.sentiment_avg_5 != null) scoreHtml = `<span style="font-size:11px;font-weight:600;color:var(--pl);margin-left:auto;">${testScores.sentiment_avg_5.toFixed(1)}/5</span>`;
+        else if (index === 3 && testScores.psychometric_avg_5 != null) scoreHtml = `<span style="font-size:11px;font-weight:600;color:var(--pl);margin-left:auto;">${testScores.psychometric_avg_5.toFixed(1)}/5</span>`;
+      }
+      return `<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;"><span class="badge ${done ? 'b-gr' : 'b-am'}" style="padding:4px 8px;font-size:11px;">${done ? 'Done' : 'Pending'}</span><span style="font-size:12px;color:var(--tx2);">${test.title}</span>${scoreHtml}</div>`;
+    }).join('');
+    if(testCount === 0){
+      summaryTestDetail.innerHTML = 'No tests have been completed yet. Start your assessments from the hub once you have saved your results.';
+    } else {
+      summaryTestDetail.innerHTML = '<div style="font-size:12px;font-weight:600;color:var(--tx);margin-bottom:8px;">Assessment status</div>' + testStatusItems;
+    }
+  }
+
+  const previewEl = document.getElementById('profileResultPreview');
+  if(previewEl){
+    if(APP.assessmentResults && APP.assessmentResults.prediction){
+      const topCareer = APP.assessmentResults.prediction.top_3 && APP.assessmentResults.prediction.top_3[0] ? APP.assessmentResults.prediction.top_3[0].career : APP.assessmentResults.prediction.predicted_career || 'Recommended Career';
+      previewEl.style.display = 'block';
+      previewEl.innerHTML = `
+        <div class="card" style="padding:14px;">
+          <div style="font-size:12px;font-weight:600;color:var(--tx2);margin-bottom:8px;">Latest Assessment Outcome</div>
+          <div style="font-size:15px;font-weight:700;margin-bottom:6px;">${topCareer}</div>
+          <div style="font-size:12px;color:var(--tx3);line-height:1.6;">
+            ${APP.assessmentResults.prediction.summary || 'Review your career recommendations to see why this path matches your academic profile and interests.'}
+          </div>
+          <button class="btn btn-p btn-sm" style="margin-top:14px;" onclick="G('career-results')">View Recommendations</button>
+        </div>`;
+    } else {
+      previewEl.style.display = 'none';
+    }
+  }
+}
+
+/* ── UI helpers ── */
+function T(msg){ const t=document.getElementById('toast'); t.innerHTML=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2400); }
+function selG(el){ document.querySelectorAll('.gcard').forEach(c=>c.classList.remove('sel')); el.classList.add('sel'); }
+function tChip(el){ el.classList.toggle('sel'); }
+function selOpt(el){ const p=el.closest('.sc')||el.closest('.page'); p.querySelectorAll('.aopt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); }
+function selCard(el){ const p=el.closest('.page'); p.querySelectorAll('.aopt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); }
+function selScale(el){ const p=el.closest('.scaleopts'); p.querySelectorAll('.sopt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); }
+function sTab(name,btn){ document.querySelectorAll('[id^="tc-"]').forEach(t=>t.classList.remove('active')); document.querySelectorAll('#DT .tabbtn').forEach(b=>b.classList.remove('active')); document.getElementById('tc-'+name).classList.add('active'); btn.classList.add('active'); }
+function toggleNotif(){ APP.notif=!APP.notif; const t=document.getElementById('notifToggle'); if(t){t.style.background=APP.notif?'var(--p)':'var(--sf2)';const d=t.querySelector('div');if(d){d.style.right=APP.notif?'3px':'20px';}} }
+function signOut(){ 
+  APP.loggedIn=false; 
+  APP.user={name:'',email:'',phone:'',dob:'',gender:'',password:''}; 
+  APP.assessmentSession=null;
+  APP.history=[];
+  APP.savedCareers=[];
+  APP.navHistory=[];
+  APP.canEnterTests=false;
+  APP.allowedTestPage='';
+  G('splash'); 
+  T('Signed out'); 
+}
+function startAssessmentFromProfile(){
+  G('assessment-hub');
+}
+function onClassChange(v){ 
+  if(APP.school){ 
+    APP.school.classLevel=v; 
+    syncProfileWithBackend();
+  } 
+}
+
+/* ── Side list ── */
+function buildSL(){
+  const l=document.getElementById('SL'); if(!l) return; l.innerHTML='';
+  SCREENS.forEach(id=>{
+    const p=document.getElementById(id); if(!p) return;
+    const li=document.createElement('li');
+    li.textContent=p.getAttribute('data-name')||id;
+    li.onclick=()=>G(id); li.setAttribute('data-id',id); l.appendChild(li);
+  });
+}
+function updateSL(id){ document.querySelectorAll('#SL li').forEach(li=>li.classList.toggle('cur',li.getAttribute('data-id')===id)); }
+
+/* ── Init ── */
+buildSL(); updateSL('splash');
+renderAssessHub();
+
+/* ── PWA ── */
+if('serviceWorker' in navigator){
+  const sw=`const C='scp-v3';self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(['./'])).then(()=>self.skipWaiting()))});self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request)).catch(()=>new Response(''))});`;
+  navigator.serviceWorker.register(URL.createObjectURL(new Blob([sw],{type:'application/javascript'}))).catch(()=>{});
+}
+let dp=null;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();dp=e;document.getElementById('installBanner').style.display='flex';});
+window.addEventListener('appinstalled',()=>{document.getElementById('installBanner').style.display='none';});
+function installApp(){ if(dp){ dp.prompt(); dp.userChoice.then(()=>{ dp=null; document.getElementById('installBanner').style.display='none'; }); } }
+</script>
+</body>
+</html>
